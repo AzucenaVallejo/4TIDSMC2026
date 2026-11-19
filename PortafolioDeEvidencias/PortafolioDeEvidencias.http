@@ -1,0 +1,6 @@
+@PortafolioDeEvidencias_HostAddress = http://localhost:5273
+
+GET {{PortafolioDeEvidencias_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

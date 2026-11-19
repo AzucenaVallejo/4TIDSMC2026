@@ -1,0 +1,43 @@
+﻿
+@PortafolioDeEvidencias_HostAddress = http://localhost:5273
+
+### Registrar un usuario
+POST {{PortafolioDeEvidencias_HostAddress}}/api/usuarios/registro
+Content-Type: application/json
+
+{
+    "nombreUsuario": "Lalo",
+    "correo": "lalo@correo.com",
+    "contrasena": "Prueba123"
+}
+
+
+### Iniciar sesión
+POST {{PortafolioDeEvidencias_HostAddress}}/api/usuarios/login
+Content-Type: application/json
+
+{
+    "correo": "lalo@correo.com",
+    "contrasena": "Prueba123"
+}
+
+
+### Guardar perfil
+POST {{PortafolioDeEvidencias_HostAddress}}/api/perfiles/1
+Content-Type: application/json
+
+{
+    "nombres": "Lalo",
+    "apellidoPaterno": "Ordoñez",
+    "apellidoMaterno": "Rosales",
+    "fechaNacimiento": "2007-02-04",
+    "telefono": "8441234567",
+    "correo": "lalo@correo.com",
+    "curp": "OORL070204HCLRSLA0",
+    "domicilio": "Saltillo, Coahuila",
+    "fotografia": null
+}
+
+
+### Consultar perfil
+GET {{PortafolioDeEvidencias_HostAddress}}/api/perfiles/1

@@ -1,0 +1,747 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Adaptación a dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Portafolio de Evidencias</title>
+
+    <meta name="description" content="Organiza tu información académica y profesional y crea tu CV de manera sencilla.">
+
+    <!-- Configuración PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6d3df5">
+
+    <!-- Compatibilidad con dispositivos Apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mi Portafolio">
+
+    <!-- Icono de la aplicación (lo agregaremos después) -->
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+    <!-- Fuente -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos del proyecto -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+</head>
+
+<body data-template-id="__page-root" style="background: linear-gradient(135deg, rgb(238, 232, 255), rgb(251, 250, 255));">
+
+    <div class="app-shell">
+
+        <!-- BIENVENIDA -->
+        <section id="welcome" class="access-view active" aria-labelledby="welcome-title">
+
+            <div class="intro-orb" style="top:-80px;right:-80px"></div>
+            <div class="intro-orb" style="bottom:65px;left:-145px;width:270px;height:270px;background:#f7f3ff"></div>
+
+            <div class="intro-content flex flex-col items-center text-center grow justify-center">
+                <div class="brand-mark mb-7" aria-hidden="true">
+                    <i data-lucide="folder-open"></i>
+                </div>
+
+                <h1 id="welcome-title" class="canva-text text-3xl font-bold tracking-tight" style="color: rgb(37, 33, 58); font-weight: 700; font-size: 32px;">
+                    Portafolio de Evidencias
+                </h1>
+
+                <p class="canva-text mt-4 text-sm leading-6 max-w-[275px]" style="color: rgb(111, 106, 131); font-size: 16px;">
+                    Organiza tu información y crea tu CV de manera sencilla.
+                </p>
+            </div>
+
+            <div class="intro-content space-y-3">
+                <button class="canva-button primary-btn" type="button" onclick="showAccess('login')">
+                    Iniciar sesión
+                </button>
+
+                <button class="canva-button secondary-btn" type="button" onclick="showAccess('register')">
+                    Crear cuenta
+                </button>
+
+                <button class="canva-button ghost-btn" type="button" onclick="enterApp()">
+                    Continuar como invitado
+                </button>
+            </div>
+        </section>
+
+
+        <!-- INICIAR SESIÓN -->
+        <section id="login" class="access-view" aria-labelledby="login-title">
+
+            <button class="back-btn mb-7" type="button" aria-label="Regresar" onclick="showAccess('welcome')">
+                <i data-lucide="arrow-left"></i>
+            </button>
+
+            <div class="brand-mark mb-7">
+                <i data-lucide="folder-open"></i>
+            </div>
+
+            <h1 id="login-title" class="canva-text text-2xl font-bold" style="color: rgb(37, 33, 58); font-size: 32px;">
+                Inicia sesión
+            </h1>
+
+            <p class="canva-text mt-2 mb-8 text-sm" style="color: rgb(111, 106, 131); font-size: 16px;">
+                Continúa organizando tus evidencias.
+            </p>
+
+            <form onsubmit="login(event)" class="grow">
+
+                <div class="field">
+                    <label for="login-email">Correo electrónico</label>
+                    <input id="login-email" type="email" required placeholder="nombre@correo.com">
+                </div>
+
+                <div class="field">
+                    <label for="login-password">Contraseña</label>
+                    <input id="login-password" type="password" required placeholder="••••••••">
+                </div>
+
+                <p id="login-message" class="notice" aria-live="polite"></p>
+
+                <button class="canva-button primary-btn mt-2" type="submit">
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <div class="text-center space-y-2 text-sm">
+
+                <button class="canva-link bg-transparent border-0 text-sm font-semibold" type="button"
+                        onclick="showMessage('login-message','Recuperación disponible al crear tu cuenta.')">
+                    ¿Olvidaste tu contraseña?
+                </button>
+
+                <br>
+
+                <button class="canva-link bg-transparent border-0 text-sm font-semibold" type="button"
+                        onclick="showAccess('register')">
+                    Crear una cuenta
+                </button>
+
+                <br>
+
+                <button class="canva-link bg-transparent border-0 text-sm font-semibold" type="button"
+                        onclick="enterApp()">
+                    Continuar como invitado
+                </button>
+
+            </div>
+        </section>
+
+
+        <!-- REGISTRO -->
+        <section id="register" class="access-view" aria-labelledby="register-title">
+
+            <button class="back-btn mb-7" type="button" aria-label="Regresar" onclick="showAccess('welcome')">
+                <i data-lucide="arrow-left"></i>
+            </button>
+
+            <div class="brand-mark mb-7">
+                <i data-lucide="folder-open"></i>
+            </div>
+
+            <h1 id="register-title" class="canva-text text-2xl font-bold" style="color: rgb(37, 33, 58); font-size: 32px;">
+                Crear cuenta
+            </h1>
+
+            <p class="canva-text mt-2 mb-8 text-sm" style="color: rgb(111, 106, 131); font-size: 16px;">
+                Registra tus datos para comenzar tu portafolio.
+            </p>
+
+            <form onsubmit="registerUser(event)" class="grow">
+
+                <div class="field">
+                    <label for="register-nombres">Nombres</label>
+                    <input id="register-nombres" type="text" required placeholder="Tus nombres">
+                </div>
+
+                <div class="field">
+                    <label for="register-apellido-paterno">Apellido paterno</label>
+                    <input id="register-apellido-paterno" type="text" required placeholder="Apellido paterno">
+                </div>
+
+                <div class="field">
+                    <label for="register-apellido-materno">Apellido materno</label>
+                    <input id="register-apellido-materno" type="text" required placeholder="Apellido materno">
+                </div>
+
+                <div class="field">
+                    <label for="register-email">Correo electrónico</label>
+                    <input id="register-email" type="email" required placeholder="nombre@correo.com">
+                </div>
+
+                <div class="field">
+                    <label for="register-password">Contraseña</label>
+                    <input id="register-password" type="password" minlength="8" required placeholder="Mínimo 8 caracteres">
+                </div>
+
+                <div class="field">
+                    <label for="register-confirm">Confirmar contraseña</label>
+                    <input id="register-confirm" type="password" minlength="8" required placeholder="Repite tu contraseña">
+                </div>
+
+                <p id="register-message" class="notice" aria-live="polite"></p>
+
+                <button class="canva-button primary-btn mt-2" type="submit">
+                    Crear cuenta
+                </button>
+
+            </form>
+
+            <div class="text-center space-y-2 text-sm mt-5">
+
+                <button class="canva-link bg-transparent border-0 text-sm font-semibold" type="button"
+                        onclick="showAccess('login')">
+                    ¿Ya tienes una cuenta? Inicia sesión
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main id="app-main" class="hidden">
+
+            <!-- INICIO -->
+            <section id="home" class="view" aria-labelledby="home-title">
+
+                <p class="canva-text text-sm font-semibold mb-1" style="color: rgb(109, 61, 245);">
+                    ¡Hola!
+                </p>
+
+                <h1 id="home-title" class="canva-text text-2xl font-bold leading-tight" style="color: rgb(37, 33, 58); font-size: 32px;">
+                    Completa tu portafolio para tener toda tu información organizada.
+                </h1>
+
+                <div class="canva-card home-hero mt-5" style="background: linear-gradient(145deg, rgb(109, 61, 245), rgb(140, 108, 246));">
+
+                    <div class="flex justify-between gap-3">
+                        <span class="canva-text font-bold text-sm" style="color: white;">
+                            Portafolio completado
+                        </span>
+
+                        <strong id="progress-text">65%</strong>
+                    </div>
+
+                    <div class="progress-track">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+
+                <h2 class="canva-text font-bold text-base mb-3" style="color: rgb(37, 33, 58);">
+                    Accesos rápidos
+                </h2>
+
+                <div class="quick-grid">
+
+                    <button class="quick-card" type="button" onclick="showView('profile')">
+                        <span class="quick-icon"><i data-lucide="user-round"></i></span>
+                        <span>Perfil</span>
+                    </button>
+
+                    <button class="quick-card" type="button" onclick="showSection('education')">
+                        <span class="quick-icon"><i data-lucide="graduation-cap"></i></span>
+                        <span>Formación académica</span>
+                    </button>
+
+                    <button class="quick-card" type="button" onclick="showSection('extra')">
+                        <span class="quick-icon"><i data-lucide="award"></i></span>
+                        <span>Formación extracurricular</span>
+                    </button>
+
+                    <button class="quick-card" type="button" onclick="showSection('experience')">
+                        <span class="quick-icon"><i data-lucide="briefcase-business"></i></span>
+                        <span>Experiencia laboral</span>
+                    </button>
+
+                    <button class="quick-card" type="button" onclick="showSection('projects')">
+                        <span class="quick-icon"><i data-lucide="folder-kanban"></i></span>
+                        <span>Proyectos</span>
+                    </button>
+
+                    <button class="quick-card" type="button" onclick="showSection('skills')">
+                        <span class="quick-icon"><i data-lucide="sparkles"></i></span>
+                        <span>Habilidades</span>
+                    </button>
+
+                    <button class="quick-card" type="button" onclick="showSection('interests')">
+                        <span class="quick-icon"><i data-lucide="heart"></i></span>
+                        <span>Intereses</span>
+                    </button>
+
+                </div>
+            </section>
+
+
+            <!-- PORTAFOLIO -->
+            <section id="portfolio" class="view" aria-labelledby="portfolio-title">
+
+                <div class="header-row">
+                    <div>
+                        <h1 id="portfolio-title" class="canva-text page-title" style="color: rgb(37, 33, 58);">
+                            Mi portafolio
+                        </h1>
+
+                        <p class="canva-text page-subtitle" style="color: rgb(111, 106, 131);">
+                            Consulta y edita cada sección.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="portfolio-summary"></div>
+
+                <button class="canva-button primary-btn mt-5" type="button" onclick="showView('cv')">
+                    Ver mi CV
+                </button>
+            </section>
+
+
+            <!-- PERFIL -->
+            <section id="profile" class="view" aria-labelledby="profile-title">
+
+                <div class="header-row">
+
+                    <button class="back-btn" type="button" aria-label="Regresar al inicio" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="profile-title" class="canva-text page-title" style="color: rgb(37, 33, 58);">
+                            Perfil
+                        </h1>
+
+                        <p class="canva-text page-subtitle" style="color: rgb(111, 106, 131);">
+                            Tu información personal.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="record-card">
+
+                    <div class="profile-row">
+                        <div>
+                            <strong>Nombre completo</strong>
+                            <small id="profile-name">Sin registrar</small>
+                        </div>
+
+                        <button class="icon-action" aria-label="Editar nombre" type="button" onclick="openProfileModal()">
+                            <i data-lucide="pencil"></i>
+                        </button>
+                    </div>
+
+                    <div class="profile-row">
+                        <div>
+                            <strong>Teléfono</strong>
+                            <small id="profile-phone">Sin registrar</small>
+                        </div>
+
+                        <button class="icon-action" aria-label="Editar teléfono" type="button" onclick="openProfileModal()">
+                            <i data-lucide="pencil"></i>
+                        </button>
+                    </div>
+
+                    <div class="profile-row">
+                        <div>
+                            <strong>Correo electrónico</strong>
+                            <small id="profile-email">Sin registrar</small>
+                        </div>
+
+                        <button class="icon-action" aria-label="Editar correo" type="button" onclick="openProfileModal()">
+                            <i data-lucide="pencil"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <h2 class="canva-text section-label">Documentos</h2>
+
+                <!-- FOTOGRAFÍA DE PERFIL -->
+                <div class="doc-card flex-col items-start gap-4">
+
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="image"></i>
+                        <span>Foto de perfil</span>
+                    </div>
+
+                    <img id="profile-photo-preview"
+                         src=""
+                         alt="Fotografía de perfil"
+                         class="hidden w-28 h-28 rounded-full object-cover border-4 border-purple-100 shadow-sm">
+
+                    <input type="file"
+                           id="photo-input"
+                           accept="image/jpeg,image/png,image/webp"
+                           class="hidden">
+
+                    <button class="canva-button secondary-btn !w-auto !py-2 !px-3 text-xs"
+                            type="button"
+                            onclick="document.getElementById('photo-input').click()">
+                        <i data-lucide="upload" class="inline w-4 h-4 mr-1"></i>
+                        Agregar fotografía
+                    </button>
+
+                    <small class="text-xs text-gray-500">
+                        Formatos JPG, PNG o WEBP. Máximo 5 MB.
+                    </small>
+
+                </div>
+
+                <div class="doc-card">
+                    <div>
+                        <i data-lucide="file-text"></i>
+                        <span>Documentos académicos</span>
+                    </div>
+
+                    <button class="canva-button secondary-btn !w-auto !py-2 !px-3 text-xs" type="button"
+                            onclick="showToast('Puedes consultar y adjuntar documentos académicos generales.')">
+                        Consultar
+                    </button>
+                </div>
+
+                <p class="canva-text tiny-note mt-4">
+                    Por privacidad, registra aquí solo evidencias académicas generales y evita datos de identificación sensibles.
+                </p>
+            </section>
+
+
+            <!-- FORMACIÓN ACADÉMICA -->
+            <section id="education" class="view section-view" aria-labelledby="education-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="education-title" class="canva-text page-title">Formación académica</h1>
+                        <p class="canva-text page-subtitle">Registra tus estudios y sus evidencias.</p>
+                    </div>
+                </div>
+
+                <div id="education-list"></div>
+
+                <button class="canva-button add-btn" type="button" onclick="openRecordModal('education')">
+                    Agregar estudio
+                </button>
+            </section>
+
+
+            <!-- FORMACIÓN EXTRACURRICULAR -->
+            <section id="extra" class="view section-view" aria-labelledby="extra-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="extra-title" class="canva-text page-title">Formación extracurricular</h1>
+                        <p class="canva-text page-subtitle">Cursos, congresos y certificaciones.</p>
+                    </div>
+                </div>
+
+                <div id="extra-list"></div>
+
+                <button class="canva-button add-btn" type="button" onclick="openRecordModal('extra')">
+                    Agregar actividad
+                </button>
+            </section>
+
+
+            <!-- EXPERIENCIA LABORAL -->
+            <section id="experience" class="view section-view" aria-labelledby="experience-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="experience-title" class="canva-text page-title">Experiencia laboral</h1>
+                        <p class="canva-text page-subtitle">Prácticas y experiencias personales.</p>
+                    </div>
+                </div>
+
+                <div id="experience-list"></div>
+
+                <button class="canva-button add-btn" type="button" onclick="openRecordModal('experience')">
+                    Agregar experiencia
+                </button>
+            </section>
+
+
+            <!-- PROYECTOS -->
+            <section id="projects" class="view section-view" aria-labelledby="projects-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="projects-title" class="canva-text page-title">Proyectos</h1>
+                        <p class="canva-text page-subtitle">Muestra lo que has creado.</p>
+                    </div>
+                </div>
+
+                <div id="projects-list"></div>
+
+                <button class="canva-button add-btn" type="button" onclick="openRecordModal('projects')">
+                    Agregar proyecto
+                </button>
+            </section>
+
+
+            <!-- HABILIDADES -->
+            <section id="skills" class="view section-view" aria-labelledby="skills-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="skills-title" class="canva-text page-title">Habilidades</h1>
+                        <p class="canva-text page-subtitle">Selecciona las que mejor te representan.</p>
+                    </div>
+                </div>
+
+                <div id="skills-chips" class="chip-grid"></div>
+
+                <form class="flex gap-2 mt-6" onsubmit="addCustomChip(event,'skills')">
+                    <label class="sr-only" for="skill-input">Nueva habilidad</label>
+                    <input id="skill-input" class="border border-[#e9e3f4] rounded-xl px-3 min-w-0 grow" type="text" placeholder="Nueva habilidad">
+                    <button class="canva-button primary-btn !w-auto !py-3 !px-4" type="submit">+</button>
+                </form>
+            </section>
+
+
+            <!-- INTERESES -->
+            <section id="interests" class="view section-view" aria-labelledby="interests-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('home')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="interests-title" class="canva-text page-title">Intereses</h1>
+                        <p class="canva-text page-subtitle">Comparte tus áreas de interés.</p>
+                    </div>
+                </div>
+
+                <div id="interests-chips" class="chip-grid"></div>
+
+                <form class="flex gap-2 mt-6" onsubmit="addCustomChip(event,'interests')">
+                    <label class="sr-only" for="interest-input">Nuevo interés</label>
+                    <input id="interest-input" class="border border-[#e9e3f4] rounded-xl px-3 min-w-0 grow" type="text" placeholder="Nuevo interés">
+                    <button class="canva-button primary-btn !w-auto !py-3 !px-4" type="submit">+</button>
+                </form>
+            </section>
+
+
+            <!-- MI CV -->
+            <section id="cv" class="view" aria-labelledby="cv-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('portfolio')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="cv-title" class="canva-text page-title">Mi CV</h1>
+                        <p class="canva-text page-subtitle">Resumen generado desde tu portafolio.</p>
+                    </div>
+                </div>
+
+                <div id="cv-summary" class="cv-paper"></div>
+
+                <button class="canva-button secondary-btn mt-5" type="button" onclick="showView('profile')">
+                    Editar CV
+                </button>
+
+                <button class="canva-button primary-btn mt-3" type="button" onclick="showView('preview')">
+                    Vista previa del CV
+                </button>
+            </section>
+
+
+            <!-- VISTA PREVIA -->
+            <section id="preview" class="view" aria-labelledby="preview-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('cv')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="preview-title" class="canva-text page-title">Vista previa del CV</h1>
+                    </div>
+                </div>
+
+                <div id="cv-preview" class="cv-paper"></div>
+
+                <button class="canva-button secondary-btn mt-5" type="button" onclick="showView('cv')">
+                    Regresar y editar
+                </button>
+
+                <button class="canva-button primary-btn mt-3" type="button" onclick="showView('export')">
+                    Exportar a PDF
+                </button>
+            </section>
+
+
+            <!-- EXPORTAR -->
+            <section id="export" class="view" aria-labelledby="export-title">
+
+                <div class="header-row">
+                    <button class="back-btn" type="button" aria-label="Regresar" onclick="showView('preview')">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+
+                    <div>
+                        <h1 id="export-title" class="canva-text page-title">Exportar CV</h1>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+
+                    <div class="brand-mark mx-auto">
+                        <i data-lucide="file-check-2"></i>
+                    </div>
+
+                    <h2 class="canva-text font-bold text-xl mt-6">
+                        Tu CV está listo
+                    </h2>
+
+                    <p class="canva-text text-sm mt-2">
+                        Revisa la información antes de preparar tu documento.
+                    </p>
+                </div>
+
+                <div id="export-confirmation" class="notice mt-7"></div>
+
+                <button class="canva-button primary-btn mt-8" type="button" onclick="exportCv()">
+                    Exportar a PDF
+                </button>
+            </section>
+
+
+            <!-- MÁS -->
+            <section id="more" class="view" aria-labelledby="more-title">
+
+                <div class="header-row">
+                    <div>
+                        <h1 id="more-title" class="canva-text page-title">Más</h1>
+                        <p class="canva-text page-subtitle">Ajustes y ayuda de tu cuenta.</p>
+                    </div>
+                </div>
+
+                <div class="more-list">
+
+                    <button type="button" onclick="showView('profile')">
+                        <span>Editar perfil</span>
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                    <button type="button" onclick="showToast('Configuración disponible en este prototipo.')">
+                        <span>Configuración</span>
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                    <button type="button" onclick="showToast('Usa las tarjetas para consultar y editar tu información.')">
+                        <span>Ayuda</span>
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                    <button type="button" onclick="showToast('Portafolio de Evidencias · versión de demostración.')">
+                        <span>Información de la aplicación</span>
+                        <i data-lucide="info"></i>
+                    </button>
+
+                    <button type="button" onclick="logout()">
+                        <span style="color:#c83855">Cerrar sesión</span>
+                        <i data-lucide="log-out" style="color:#c83855"></i>
+                    </button>
+
+                </div>
+            </section>
+
+        </main>
+
+
+        <!-- NAVEGACIÓN INFERIOR -->
+        <nav id="bottom-nav" class="bottom-nav" aria-label="Navegación principal">
+
+            <button class="nav-item active" type="button" data-nav="home" onclick="showView('home')">
+                <i data-lucide="house"></i>
+                <span>Inicio</span>
+            </button>
+
+            <button class="nav-item" type="button" data-nav="portfolio" onclick="showView('portfolio')">
+                <i data-lucide="folder-open"></i>
+                <span>Portafolio</span>
+            </button>
+
+            <button class="nav-item" type="button" data-nav="profile" onclick="showView('profile')">
+                <i data-lucide="user-round"></i>
+                <span>Perfil</span>
+            </button>
+
+            <button class="nav-item" type="button" data-nav="more" onclick="showView('more')">
+                <i data-lucide="menu"></i>
+                <span>Más</span>
+            </button>
+
+        </nav>
+
+
+        <!-- VENTANA MODAL -->
+        <div id="modal-wrap" class="modal-wrap" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+            <div class="modal">
+
+                <div class="modal-head">
+                    <h2 id="modal-title">Agregar información</h2>
+
+                    <button class="close-btn" aria-label="Cerrar formulario" type="button" onclick="closeModal()">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+
+                <form id="record-form" onsubmit="saveRecord(event)">
+
+                    <div id="modal-fields"></div>
+
+                    <p id="modal-message" class="notice" aria-live="polite"></p>
+
+                    <button class="canva-button primary-btn mt-2" type="submit">
+                        Guardar cambios
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+
+        <!-- NOTIFICACIONES -->
+        <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 hidden z-30 bg-[#25213a] text-white px-4 py-3 rounded-xl text-sm shadow-lg max-w-[300px] text-center"></div>
+
+    </div>
+
+    <!-- JavaScript del proyecto -->
+    <script type="module" src="/js/script.js"></script>
+
+</body>
+</html>
