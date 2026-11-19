@@ -37,10 +37,20 @@ builder.Services.AddAuthentication(
 var projectId = builder.Configuration["Firebase:ProjectId"]
     ?? throw new Exception("No se encontró el Project ID de Firebase.");
 
-var credentialsPath = builder.Configuration["Firebase:CredentialsPath"]
-    ?? throw new Exception("No se encontró la ruta de las credenciales.");
+var credentialsJson = builder.Configuration["Firebase:CredentialsJson"];
+GoogleCredential credential;
 
-var credential = GoogleCredential.FromFile(credentialsPath);
+if (!string.IsNullOrEmpty(credentialsJson))
+{
+    credential = GoogleCredential.FromJson(credentialsJson);
+}
+else
+{
+    var credentialsPath = builder.Configuration["Firebase:CredentialsPath"]
+        ?? throw new Exception("No se encontró la ruta de las credenciales.");
+
+    credential = GoogleCredential.FromFile(credentialsPath);
+}
 
 // Inicializar Firebase Admin
 var firebaseApp = FirebaseApp.Create(new AppOptions
@@ -50,7 +60,6 @@ var firebaseApp = FirebaseApp.Create(new AppOptions
 });
 
 builder.Services.AddSingleton(firebaseApp);
-
 // Conexión con Cloud Firestore
 var firestore = new FirestoreDbBuilder
 {
