@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="PortalEvidencias.Aplicacion/PortalEvidencias.Aplicacion.csproj" />
+  <Project Path="PortalEvidencias.Dominio/PortalEvidencias.Dominio.csproj" />
+  <Project Path="PortalEvidencias.Infraestructura/PortalEvidencias.Infraestructura.csproj" />
+  <Project Path="PortalEvidencias/PortalEvidencias.csproj" />
+</Solution>

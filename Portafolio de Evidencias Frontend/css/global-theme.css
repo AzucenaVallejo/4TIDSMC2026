@@ -1,0 +1,370 @@
+/* Portal de Evidencias | Sistema global de temas */
+
+:root {
+    color-scheme: light;
+    --theme-base: #f4f7fb;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #edf2f8;
+    --theme-border: #dce4ee;
+    --theme-text-main: #172b4d;
+    --theme-text-muted: #64748b;
+    --theme-primary: #2563eb;
+    --theme-primary-hover: #1d4ed8;
+    --theme-primary-soft: #dbeafe;
+    --theme-primary-text: #ffffff;
+    --theme-font-scale: 1;
+    --theme-transition: 180ms ease;
+}
+
+/* 01. Classic — predeterminado */
+:root[data-theme="classic"] {
+    color-scheme: light;
+    --theme-base: #f4f7fb;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #edf2f8;
+    --theme-border: #dce4ee;
+    --theme-text-main: #172b4d;
+    --theme-text-muted: #64748b;
+    --theme-primary: #2563eb;
+    --theme-primary-hover: #1d4ed8;
+    --theme-primary-soft: #dbeafe;
+    --theme-primary-text: #ffffff;
+}
+
+/* 02. Ocean */
+:root[data-theme="ocean"] {
+    color-scheme: light;
+    --theme-base: #edf6f9;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #dceef3;
+    --theme-border: #c6dfe7;
+    --theme-text-main: #123746;
+    --theme-text-muted: #557783;
+    --theme-primary: #087e9b;
+    --theme-primary-hover: #06677f;
+    --theme-primary-soft: #d1eef4;
+    --theme-primary-text: #ffffff;
+}
+
+/* 03. Rose */
+:root[data-theme="rose"] {
+    color-scheme: light;
+    --theme-base: #fff4f6;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #fce8ed;
+    --theme-border: #f1cbd5;
+    --theme-text-main: #512b3b;
+    --theme-text-muted: #8b6574;
+    --theme-primary: #c04b78;
+    --theme-primary-hover: #a83b66;
+    --theme-primary-soft: #f9dce6;
+    --theme-primary-text: #ffffff;
+}
+
+/* 04. Forest */
+:root[data-theme="forest"] {
+    color-scheme: light;
+    --theme-base: #f0f5ef;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #e3eee1;
+    --theme-border: #cbdcc8;
+    --theme-text-main: #263e2b;
+    --theme-text-muted: #687d6b;
+    --theme-primary: #39734a;
+    --theme-primary-hover: #2c5d3b;
+    --theme-primary-soft: #dcebdd;
+    --theme-primary-text: #ffffff;
+}
+
+/* 05. Coffee */
+:root[data-theme="coffee"] {
+    color-scheme: light;
+    --theme-base: #f7f1eb;
+    --theme-surface: #fffdfb;
+    --theme-surface-hover: #eee3d8;
+    --theme-border: #dfcdbb;
+    --theme-text-main: #493326;
+    --theme-text-muted: #887361;
+    --theme-primary: #95613c;
+    --theme-primary-hover: #784a2d;
+    --theme-primary-soft: #efdfcf;
+    --theme-primary-text: #ffffff;
+}
+
+/* 06. Midnight */
+:root[data-theme="midnight"] {
+    color-scheme: dark;
+    --theme-base: #111827;
+    --theme-surface: #1c2738;
+    --theme-surface-hover: #29384d;
+    --theme-border: #34445b;
+    --theme-text-main: #e8eef8;
+    --theme-text-muted: #a3b1c5;
+    --theme-primary: #6095f5;
+    --theme-primary-hover: #82adff;
+    --theme-primary-soft: #263e63;
+    --theme-primary-text: #101b2d;
+}
+
+/* 07. Abyss */
+:root[data-theme="abyss"] {
+    color-scheme: dark;
+    --theme-base: #071b25;
+    --theme-surface: #102b38;
+    --theme-surface-hover: #193b4a;
+    --theme-border: #28505e;
+    --theme-text-main: #e4f4f8;
+    --theme-text-muted: #9ab9c3;
+    --theme-primary: #19a6bd;
+    --theme-primary-hover: #42c2d5;
+    --theme-primary-soft: #174b5b;
+    --theme-primary-text: #ffffff;
+}
+
+/* 08. Monochrome */
+:root[data-theme="monochrome"] {
+    color-scheme: light;
+    --theme-base: #f2f2f2;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #e7e7e7;
+    --theme-border: #d2d2d2;
+    --theme-text-main: #242424;
+    --theme-text-muted: #707070;
+    --theme-primary: #505050;
+    --theme-primary-hover: #333333;
+    --theme-primary-soft: #e4e4e4;
+    --theme-primary-text: #ffffff;
+}
+
+/* 09. Lavender */
+:root[data-theme="lavender"] {
+    color-scheme: light;
+    --theme-base: #f5f2fb;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #ebe5f7;
+    --theme-border: #d9cdec;
+    --theme-text-main: #382b50;
+    --theme-text-muted: #796b91;
+    --theme-primary: #8061b5;
+    --theme-primary-hover: #684a9b;
+    --theme-primary-soft: #e9def8;
+    --theme-primary-text: #ffffff;
+}
+
+/* 10. Sunset */
+:root[data-theme="sunset"] {
+    color-scheme: light;
+    --theme-base: #fff4ed;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #ffe7d8;
+    --theme-border: #f4d0bd;
+    --theme-text-main: #573324;
+    --theme-text-muted: #92715f;
+    --theme-primary: #df7548;
+    --theme-primary-hover: #bf5933;
+    --theme-primary-soft: #ffe0cf;
+    --theme-primary-text: #ffffff;
+}
+
+/* 11. Emerald */
+:root[data-theme="emerald"] {
+    color-scheme: light;
+    --theme-base: #edf7f3;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #dcefe7;
+    --theme-border: #c5e0d4;
+    --theme-text-main: #173e32;
+    --theme-text-muted: #5d7f72;
+    --theme-primary: #16835f;
+    --theme-primary-hover: #116c4e;
+    --theme-primary-soft: #d2eee2;
+    --theme-primary-text: #ffffff;
+}
+
+/* 12. Sage */
+:root[data-theme="sage"] {
+    color-scheme: light;
+    --theme-base: #f2f5ef;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #e6ecdf;
+    --theme-border: #d3ddc8;
+    --theme-text-main: #354331;
+    --theme-text-muted: #75836e;
+    --theme-primary: #718b5c;
+    --theme-primary-hover: #5c7449;
+    --theme-primary-soft: #e2ebd8;
+    --theme-primary-text: #ffffff;
+}
+
+/* 13. Sand */
+:root[data-theme="sand"] {
+    color-scheme: light;
+    --theme-base: #f8f4eb;
+    --theme-surface: #fffefa;
+    --theme-surface-hover: #eee7d8;
+    --theme-border: #e0d5bf;
+    --theme-text-main: #453d2d;
+    --theme-text-muted: #857a65;
+    --theme-primary: #a8874c;
+    --theme-primary-hover: #896d3b;
+    --theme-primary-soft: #f0e6d1;
+    --theme-primary-text: #ffffff;
+}
+
+/* 14. Cherry */
+:root[data-theme="cherry"] {
+    color-scheme: light;
+    --theme-base: #fff1f2;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #ffe0e3;
+    --theme-border: #f1c5cb;
+    --theme-text-main: #4a2028;
+    --theme-text-muted: #8c6269;
+    --theme-primary: #b8324b;
+    --theme-primary-hover: #96263c;
+    --theme-primary-soft: #f8d9de;
+    --theme-primary-text: #ffffff;
+}
+
+/* 15. Arctic */
+:root[data-theme="arctic"] {
+    color-scheme: light;
+    --theme-base: #f0f7fc;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #e0eef8;
+    --theme-border: #c8dfef;
+    --theme-text-main: #1d3c54;
+    --theme-text-muted: #66849a;
+    --theme-primary: #438bbd;
+    --theme-primary-hover: #31749f;
+    --theme-primary-soft: #d8ebf8;
+    --theme-primary-text: #ffffff;
+}
+
+/* 16. Plum */
+:root[data-theme="plum"] {
+    color-scheme: light;
+    --theme-base: #f7f1f8;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #eee2f0;
+    --theme-border: #ddc9e1;
+    --theme-text-main: #432d4a;
+    --theme-text-muted: #806b88;
+    --theme-primary: #89519b;
+    --theme-primary-hover: #713e83;
+    --theme-primary-soft: #edddf2;
+    --theme-primary-text: #ffffff;
+}
+
+/* 17. Copper */
+:root[data-theme="copper"] {
+    color-scheme: light;
+    --theme-base: #f8f1ed;
+    --theme-surface: #fffdfb;
+    --theme-surface-hover: #efe1d8;
+    --theme-border: #dfc8ba;
+    --theme-text-main: #4a3025;
+    --theme-text-muted: #876c5d;
+    --theme-primary: #a65e3c;
+    --theme-primary-hover: #88492e;
+    --theme-primary-soft: #f1dfd5;
+    --theme-primary-text: #ffffff;
+}
+
+/* 18. Slate */
+:root[data-theme="slate"] {
+    color-scheme: light;
+    --theme-base: #eef1f5;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #e2e7ee;
+    --theme-border: #cfd7e2;
+    --theme-text-main: #293647;
+    --theme-text-muted: #68778a;
+    --theme-primary: #52677f;
+    --theme-primary-hover: #40546b;
+    --theme-primary-soft: #dce5ef;
+    --theme-primary-text: #ffffff;
+}
+
+/* 19. Mint */
+:root[data-theme="mint"] {
+    color-scheme: light;
+    --theme-base: #eff9f5;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #ddf2e9;
+    --theme-border: #c4e5d7;
+    --theme-text-main: #204438;
+    --theme-text-muted: #66877b;
+    --theme-primary: #38a77e;
+    --theme-primary-hover: #258b66;
+    --theme-primary-soft: #d8f1e6;
+    --theme-primary-text: #ffffff;
+}
+
+/* 20. Solar */
+:root[data-theme="solar"] {
+    color-scheme: light;
+    --theme-base: #fff9e8;
+    --theme-surface: #ffffff;
+    --theme-surface-hover: #fff0c2;
+    --theme-border: #f1dfa0;
+    --theme-text-main: #4a3b18;
+    --theme-text-muted: #89794c;
+    --theme-primary: #c28b16;
+    --theme-primary-hover: #9d6d0d;
+    --theme-primary-soft: #f9ebbd;
+    --theme-primary-text: #ffffff;
+}
+
+/* Variables semánticas globales */
+html {
+    background: var(--theme-base);
+    color: var(--theme-text-main);
+    font-size: calc(16px * var(--theme-font-scale));
+}
+
+body {
+    background-color: var(--theme-base);
+    color: var(--theme-text-main);
+    transition: background-color var(--theme-transition), color var(--theme-transition);
+}
+
+.theme-bg { background: var(--theme-base) !important; }
+.theme-surface { background: var(--theme-surface) !important; }
+.theme-text { color: var(--theme-text-main) !important; }
+.theme-muted { color: var(--theme-text-muted) !important; }
+.theme-border { border-color: var(--theme-border) !important; }
+.theme-primary {
+    background: var(--theme-primary) !important;
+    color: var(--theme-primary-text) !important;
+}
+.theme-primary-text { color: var(--theme-primary) !important; }
+.theme-primary-soft { background: var(--theme-primary-soft) !important; }
+
+html[data-text-size="small"] { --theme-font-scale: .92; }
+html[data-text-size="medium"] { --theme-font-scale: 1; }
+html[data-text-size="large"] { --theme-font-scale: 1.10; }
+
+body.theme-reduced-motion *,
+body.theme-reduced-motion *::before,
+body.theme-reduced-motion *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+}
+
+body.theme-compact .card,
+body.theme-compact .panel,
+body.theme-compact .section-card {
+    padding: .75rem !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--theme-primary);
+    outline-offset: 2px;
+}

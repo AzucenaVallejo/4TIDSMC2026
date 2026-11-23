@@ -1,0 +1,1867 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10263D">
+    <title>Editar perfil | Portal de Evidencias</title>
+    <link rel="icon" href="img/PortalEvidenciasIcon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#17324d">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+    window.PORTAL_API_BASE = 'https://pureblood-starfish-happening.ngrok-free.dev/api';
+</script>
+
+<script src="./js/themes.js"></script>
+<style>
+    :root {
+        /* Variables dinámicas de theme.js */
+        --background: var(--theme-base, #F4F6F8);
+        --surface: var(--theme-surface, #FFFFFF);
+        --surface-soft: var(--theme-surface-hover, #F8FAFC);
+        --text: var(--theme-text-main, #263238);
+        --muted: var(--theme-text-muted, #71808A);
+        --border: var(--theme-border, #E3E9EE);
+
+        --navy: var(--theme-text-main, #16324F);
+        --navy-deep: var(--sidebar-background, #10263D);
+        --blue: var(--theme-primary-hover, #245B7A);
+        --teal: var(--theme-primary, #2A9D8F);
+        --teal-dark: var(--theme-primary-hover, #238579);
+        --teal-light: var(--theme-primary-soft, #E4F4F1);
+        --blue-light: var(--theme-primary-soft, #EAF1F6);
+
+        /* Colores semánticos */
+        --danger: #D9534F;
+        --danger-light: #FFF0EF;
+        --success: #299D70;
+        --warning: #D69B35;
+
+        --font-body: 'DM Sans', sans-serif;
+        --font-heading: 'Manrope', sans-serif;
+        --sidebar-width: 260px;
+
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --radius-md: 13px;
+        --radius-sm: 9px;
+
+        --shadow-card: 0 5px 22px rgba(22, 50, 79, .045);
+        --shadow-hover: 0 14px 32px rgba(22, 50, 79, .10);
+        --transition: .25s ease;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: var(--background);
+        color: var(--text);
+        font-family: var(--font-body);
+        visibility: hidden;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    button:focus-visible, a:focus-visible, input:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--teal) 30%, transparent);
+        outline-offset: 3px;
+    }
+
+    .app-container { min-height: 100vh; }
+
+    /* SIDEBAR */
+
+    .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        width: var(--sidebar-width);
+        padding: 28px 19px 22px;
+        color: var(--sidebar-text, #FFFFFF);
+        background: var(--sidebar-background, var(--navy-deep));
+    }
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 9px 35px;
+    }
+
+    .logo-mark {
+        display: grid;
+        place-items: center;
+        width: 43px;
+        height: 43px;
+        flex-shrink: 0;
+        color: var(--sidebar-brand-icon, #FFFFFF);
+        background: var(--sidebar-brand-background, var(--teal));
+        border-radius: 13px;
+        font-size: 25px;
+    }
+
+    .logo-name {
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.15;
+    }
+
+    .logo-subtitle {
+        display: block;
+        margin-top: 4px;
+        color: var(--sidebar-text-muted, #A9BBC9);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .35px;
+    }
+
+    .sidebar-label {
+        padding: 0 13px;
+        margin-bottom: 12px;
+        color: var(--sidebar-label, #8298AA);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        min-height: 47px;
+        padding: 0 14px;
+        color: var(--sidebar-link, #C2CFD9);
+        border-radius: 11px;
+        font-size: 13px;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .nav-item i { font-size: 19px; }
+
+    .nav-item:hover {
+        color: var(--sidebar-text, #FFFFFF);
+        background: var(--sidebar-link-hover, rgba(255,255,255,.07));
+    }
+
+    .nav-item.active {
+        color: var(--sidebar-link-active-text, #FFFFFF);
+        background: var(--sidebar-link-active, rgba(42,157,143,.18));
+        box-shadow: inset 3px 0 var(--teal);
+    }
+
+    .nav-item.active i {
+        color: var(--sidebar-link-active-text, #5DD0BE);
+    }
+
+    .sidebar-footer {
+        margin-top: auto;
+        padding: 18px 12px 4px;
+        border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .sidebar-footer p {
+        color: var(--sidebar-text-muted, #A5B7C5);
+        font-size: 11px;
+        line-height: 1.7;
+    }
+
+    .sidebar-footer strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--sidebar-text, #FFFFFF);
+        font-size: 12px;
+    }
+
+    /* MAIN */
+
+    .main-content {
+        min-height: 100vh;
+        margin-left: var(--sidebar-width);
+        padding: 35px 48px 70px;
+    }
+
+    .content-wrapper {
+        width: 100%;
+        max-width: 1250px;
+        margin: 0 auto;
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 34px;
+    }
+
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .breadcrumb a:hover { color: var(--teal); }
+    .breadcrumb i { font-size: 14px; }
+
+    .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .topbar-status {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 12px;
+        color: var(--teal);
+        background: var(--teal-light);
+        border-radius: 30px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .status-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--teal);
+        border-radius: 50%;
+    }
+
+    .header-avatar {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        color: var(--navy);
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        font-size: 17px;
+    }
+
+    .page-heading { margin-bottom: 29px; }
+
+    .eyebrow {
+        margin-bottom: 8px;
+        color: var(--teal);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    .page-title {
+        color: var(--navy);
+        font-family: var(--font-heading);
+        font-size: clamp(25px, 3vw, 32px);
+        font-weight: 800;
+        letter-spacing: -.9px;
+    }
+
+    .page-subtitle {
+        max-width: 650px;
+        margin-top: 9px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    /* HERO CON DEGRADADO Y GLASSMORPHISM */
+
+    .hero {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+        min-height: 175px;
+        padding: 30px 34px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(255, 255, 255, .28);
+        border-radius: var(--radius-xl);
+        background:
+            radial-gradient(
+                circle at 85% 15%,
+                rgba(255, 255, 255, .30),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 15% 100%,
+                var(--theme-primary-hover, #245B7A) 0%,
+                transparent 48%
+            ),
+            linear-gradient(
+                120deg,
+                var(--theme-primary, #2A9D8F) 0%,
+                var(--theme-primary-hover, #245B7A) 55%,
+                var(--theme-primary, #2A9D8F) 100%
+            );
+        color: #FFFFFF;
+        box-shadow:
+            0 10px 35px rgba(20, 35, 55, .14),
+            inset 0 1px 0 rgba(255, 255, 255, .25);
+    }
+
+    .hero::after {
+        position: absolute;
+        z-index: -1;
+        top: -110px;
+        right: 5%;
+        width: 320px;
+        height: 320px;
+        border: 1px solid rgba(255, 255, 255, .20);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .10);
+        box-shadow:
+            0 0 70px rgba(255, 255, 255, .12),
+            inset 0 0 45px rgba(255, 255, 255, .12);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        content: "";
+        pointer-events: none;
+    }
+
+    /* CARDS AND LAYOUT */
+
+    .profile-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(290px, .85fr);
+        gap: 22px;
+        align-items: start;
+    }
+
+    .main-column, .side-column {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        min-width: 0;
+    }
+
+    .card {
+        padding: 25px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        padding-bottom: 18px;
+        margin-bottom: 21px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .card-heading {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .card-icon {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        color: var(--teal);
+        background: var(--teal-light);
+        border-radius: 11px;
+        font-size: 19px;
+    }
+
+    .card-title {
+        color: var(--navy);
+        font-family: var(--font-heading);
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .card-description {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .card-tag {
+        padding: 6px 9px;
+        color: var(--muted);
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        font-size: 10px;
+        white-space: nowrap;
+    }
+
+    /* FORM */
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 19px 16px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        min-width: 0;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text);
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .required { color: var(--danger); }
+
+    .input-shell {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 13px;
+        color: var(--muted);
+        font-size: 17px;
+        pointer-events: none;
+    }
+
+    .form-input {
+        width: 100%;
+        height: 45px;
+        padding: 0 13px 0 41px;
+        color: var(--text);
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 12px;
+        transition: var(--transition);
+    }
+
+    .form-input::placeholder { color: var(--muted); }
+
+    .form-input:hover {
+        border-color: var(--theme-primary, #2A9D8F);
+    }
+
+    .form-input:focus {
+        outline: none;
+        background: var(--surface);
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 10%, transparent);
+    }
+
+    .form-input.error {
+        border-color: var(--danger);
+        background: var(--danger-light);
+    }
+
+    .form-input[readonly] {
+        color: var(--muted);
+        background: var(--surface-soft);
+        cursor: not-allowed;
+    }
+
+    .field-hint {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .error-message {
+        display: none;
+        color: var(--danger);
+        font-size: 10px;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        color: var(--muted);
+        background: transparent;
+        border: 0;
+        border-radius: 7px;
+    }
+
+    .toggle-password:hover {
+        background: var(--surface-soft);
+    }
+
+    .input-shell.password .form-input { padding-right: 43px; }
+
+    /* PHOTO */
+
+    .photo-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .photo-card::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--teal), var(--theme-primary-hover, #79C8BB));
+        content: "";
+    }
+
+    .photo-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .avatar-wrapper {
+        position: relative;
+        width: 116px;
+        height: 116px;
+        margin: 5px 0 15px;
+        background: var(--surface-soft);
+        border: 5px solid var(--surface);
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px var(--border), 0 7px 22px rgba(22,50,79,.10);
+        overflow: hidden;
+    }
+
+    .avatar-img {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-placeholder {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        color: var(--blue);
+        font-size: 43px;
+    }
+
+    .avatar-edit {
+        position: absolute;
+        right: 1px;
+        bottom: 2px;
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        color: #FFFFFF;
+        background: var(--teal);
+        border: 3px solid var(--surface);
+        border-radius: 50%;
+        font-size: 15px;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .avatar-edit:hover { transform: scale(1.08); }
+
+    .photo-name {
+        color: var(--navy);
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+    .photo-email {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 11px;
+        overflow-wrap: anywhere;
+    }
+
+    .photo-note {
+        max-width: 260px;
+        margin: 16px 0;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.7;
+    }
+
+    .photo-actions {
+        display: flex;
+        width: 100%;
+        gap: 9px;
+    }
+
+    /* BUTTONS */
+
+    .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        min-height: 41px;
+        padding: 0 15px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 700;
+        transition: var(--transition);
+    }
+
+    .btn i { font-size: 16px; }
+
+    .btn-primary {
+        color: #FFFFFF;
+        background: var(--teal);
+    }
+
+    .btn-primary:hover {
+        background: var(--teal-dark);
+        box-shadow: 0 5px 14px color-mix(in srgb, var(--teal) 20%, transparent);
+        transform: translateY(-1px);
+    }
+
+    .btn-outline {
+        color: var(--navy);
+        background: var(--surface);
+        border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+        background: var(--surface-soft);
+        border-color: var(--theme-primary, #B8C9D2);
+    }
+
+    .btn-danger {
+        color: var(--danger);
+        background: var(--surface);
+        border-color: #F0D0CE;
+    }
+
+    .btn-danger:hover { background: var(--danger-light); }
+    .btn-full { flex: 1; width: 100%; }
+
+    /* SECURITY */
+
+    .security-notice {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px;
+        margin-bottom: 19px;
+        color: var(--text);
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 10px;
+        line-height: 1.6;
+    }
+
+    .security-notice i {
+        color: var(--blue);
+        font-size: 17px;
+    }
+
+    .password-strength {
+        height: 5px;
+        margin-top: 9px;
+        overflow: hidden;
+        background: var(--border);
+        border-radius: 10px;
+    }
+
+    .password-strength-bar {
+        width: 0;
+        height: 100%;
+        background: var(--danger);
+        border-radius: inherit;
+        transition: .3s;
+    }
+
+    .strength-text {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 10px;
+        text-align: right;
+    }
+
+    .security-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 19px;
+    }
+
+    /* PUBLIC PROFILE */
+
+    .visibility-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+    }
+
+    .visibility-title {
+        color: var(--navy);
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .visibility-description {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .toggle-switch {
+        position: relative;
+        width: 42px;
+        height: 23px;
+        flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: var(--border);
+        border-radius: 30px;
+        cursor: pointer;
+        transition: .25s;
+    }
+
+    .toggle-slider::before {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 17px;
+        height: 17px;
+        background: #FFFFFF;
+        border-radius: 50%;
+        content: "";
+        transition: .25s;
+    }
+
+    .toggle-switch input:checked + .toggle-slider { background: var(--teal); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(19px); }
+
+    .access-code-label {
+        display: block;
+        margin: 18px 0 8px;
+        color: var(--text);
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .public-link-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        background: var(--surface-soft);
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+    }
+
+    .public-link-text {
+        color: var(--navy);
+        font-family: monospace;
+        font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .copy-btn {
+        display: grid;
+        place-items: center;
+        width: 31px;
+        height: 31px;
+        flex-shrink: 0;
+        color: var(--teal);
+        background: var(--teal-light);
+        border: 0;
+        border-radius: 8px;
+    }
+
+    .copy-btn:hover {
+        background: color-mix(in srgb, var(--teal-light) 75%, var(--teal));
+    }
+
+    /* STATS */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        padding: 12px 10px;
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 11px;
+    }
+
+    .stat-icon {
+        display: grid;
+        place-items: center;
+        width: 33px;
+        height: 33px;
+        flex-shrink: 0;
+        color: var(--blue);
+        background: var(--surface);
+        border-radius: 9px;
+        font-size: 16px;
+    }
+
+    .stat-value {
+        color: var(--navy);
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+    .stat-label {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 9px;
+    }
+
+    /* SAVE BAR */
+
+    .save-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 19px 0 0;
+        margin-top: 25px;
+        border-top: 1px solid var(--border);
+    }
+
+    .save-note {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--muted);
+        font-size: 10px;
+    }
+
+    .save-note i { color: var(--teal); font-size: 15px; }
+
+    .save-actions { display: flex; gap: 9px; }
+
+    /* MODALS */
+
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 18px;
+        background: rgba(12, 31, 48, .62);
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 460px;
+        max-height: 90vh;
+        overflow: hidden;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 19px;
+        box-shadow: 0 25px 70px rgba(0,0,0,.2);
+        transform: translateY(15px) scale(.98);
+        transition: var(--transition);
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 21px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title {
+        color: var(--navy);
+        font-family: var(--font-heading);
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .modal-close {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        color: var(--muted);
+        background: var(--surface-soft);
+        border: 0;
+        border-radius: 9px;
+        font-size: 18px;
+    }
+
+    .modal-close:hover { color: var(--danger); }
+
+    .modal-body {
+        padding: 21px;
+        overflow-y: auto;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 9px;
+        padding: 15px 21px;
+        background: var(--surface-soft);
+        border-top: 1px solid var(--border);
+    }
+
+    .photo-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .photo-option-btn {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        width: 100%;
+        padding: 15px;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .photo-option-btn:hover {
+        background: var(--surface-soft);
+        border-color: var(--teal);
+    }
+
+    .photo-option-btn i {
+        color: var(--teal);
+        font-size: 21px;
+    }
+
+    .camera-video {
+        display: block;
+        width: 100%;
+        max-height: 390px;
+        background: #101820;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    .camera-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+    }
+
+    .capture-btn {
+        display: grid;
+        place-items: center;
+        width: 66px;
+        height: 66px;
+        background: var(--surface);
+        border: 4px solid var(--border);
+        border-radius: 50%;
+    }
+
+    .capture-btn span {
+        width: 48px;
+        height: 48px;
+        background: var(--teal);
+        border-radius: 50%;
+    }
+
+    .editor-container {
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+    }
+
+    .canvas-wrapper {
+        display: grid;
+        place-items: center;
+        width: 100%;
+        aspect-ratio: 1;
+        max-height: 350px;
+        overflow: hidden;
+        background: #101820;
+        border-radius: 12px;
+    }
+
+    #photo-canvas {
+        width: min(100%, 350px);
+        height: auto;
+        max-height: 350px;
+        cursor: grab;
+        touch-action: none;
+    }
+
+    .filter-gallery {
+        display: flex;
+        gap: 11px;
+        padding: 3px 1px 9px;
+        overflow-x: auto;
+    }
+
+    .filter-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .filter-preview {
+        width: 54px;
+        height: 54px;
+        background: linear-gradient(135deg, var(--teal), var(--navy));
+        background-position: center;
+        background-size: cover;
+        border: 2px solid transparent;
+        border-radius: 10px;
+    }
+
+    .filter-item.active .filter-preview { border-color: var(--teal); }
+
+    .filter-name {
+        color: var(--muted);
+        font-size: 9px;
+    }
+
+    .control-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .control-row label {
+        width: 68px;
+        flex-shrink: 0;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .control-row input { flex: 1; accent-color: var(--teal); }
+
+    /* TOAST */
+
+    .toast {
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        max-width: calc(100% - 30px);
+        padding: 13px 19px;
+        color: var(--sidebar-text, #FFFFFF);
+        background: var(--sidebar-background, var(--navy-deep));
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.18);
+        font-size: 11px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 15px);
+        transition: .25s;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    .toast i {
+        color: var(--sidebar-brand-icon, #5DD0BE);
+        font-size: 17px;
+    }
+
+    /* MOBILE NAV */
+
+    .bottom-nav {
+        display: none;
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 100;
+        justify-content: space-around;
+        align-items: center;
+        min-height: 68px;
+        padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
+        background: color-mix(in srgb, var(--surface) 94%, transparent);
+        border-top: 1px solid var(--border);
+        backdrop-filter: blur(14px);
+    }
+
+    .bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        min-width: 58px;
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 600;
+    }
+
+    .bottom-nav-item i { font-size: 20px; }
+    .bottom-nav-item.active { color: var(--teal); }
+
+    /* MODALES DE AUTENTICACIÓN Y CONEXIÓN */
+
+    .auth-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(13, 29, 46, 0.72);
+        backdrop-filter: blur(6px);
+    }
+
+    .auth-modal {
+        width: 100%;
+        max-width: 410px;
+        padding: 38px 32px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background: var(--surface);
+        color: var(--text);
+        text-align: center;
+        box-shadow: 0 22px 65px rgba(0, 0, 0, 0.23);
+        animation: modalAppear 0.3s ease;
+    }
+
+    .auth-modal-icon {
+        width: 69px;
+        height: 69px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        border-radius: 20px;
+        background: var(--blue-light);
+        color: var(--blue);
+        font-size: 28px;
+    }
+
+    .auth-modal h2 {
+        margin-bottom: 10px;
+        color: var(--navy);
+        font-family: var(--font-heading);
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .auth-modal p {
+        margin-bottom: 19px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .auth-modal-message {
+        display: block;
+        color: var(--teal);
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .auth-modal button {
+        width: 100%;
+        padding: 13px;
+        border: none;
+        border-radius: 10px;
+        background: var(--navy);
+        color: #FFFFFF;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .auth-modal button:hover {
+        background: var(--teal);
+    }
+
+    @keyframes modalAppear {
+        from {
+            opacity: 0;
+            transform: translateY(14px) scale(0.97);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1150px) {
+        .main-content { padding-right: 30px; padding-left: 30px; }
+        .profile-layout { grid-template-columns: minmax(0, 1.2fr) minmax(270px, .8fr); }
+        .card { padding: 21px; }
+    }
+
+    @media (max-width: 900px) {
+        .profile-layout { grid-template-columns: 1fr; }
+
+        .side-column {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: start;
+        }
+
+        .photo-card { grid-column: 1 / -1; }
+
+        .photo-content {
+            flex-direction: row;
+            text-align: left;
+            gap: 17px;
+        }
+
+        .avatar-wrapper { flex-shrink: 0; margin: 0; }
+        .photo-details { flex: 1; min-width: 0; }
+        .photo-actions { max-width: 250px; }
+        .photo-note { margin: 8px 0; }
+    }
+
+    @media (max-width: 700px) {
+        .sidebar { display: none; }
+
+        .main-content {
+            margin-left: 0;
+            padding: 23px 17px 105px;
+        }
+
+        .bottom-nav { display: flex; }
+        .topbar { margin-bottom: 27px; }
+        .topbar-status { display: none; }
+        .page-heading { margin-bottom: 22px; }
+        .page-title { font-size: 27px; }
+        .page-subtitle { font-size: 12px; }
+        .side-column { display: flex; }
+
+        .photo-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .photo-actions { max-width: 100%; }
+        .photo-note { margin: 12px auto; }
+        .card { padding: 19px; }
+
+        .save-bar {
+            position: fixed;
+            inset: auto 0 68px;
+            z-index: 90;
+            padding: 12px 16px;
+            margin: 0;
+            background: color-mix(in srgb, var(--surface) 97%, transparent);
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .save-note { display: none; }
+        .save-actions { width: 100%; }
+        .save-actions .btn { flex: 1; }
+        .toast { bottom: 85px; }
+    }
+
+    @media (max-width: 440px) {
+        .main-content { padding-right: 13px; padding-left: 13px; }
+        .form-grid { grid-template-columns: 1fr; }
+        .form-group.full { grid-column: auto; }
+        .card { padding: 17px; }
+        .card-header { margin-bottom: 17px; }
+        .stats-grid { gap: 8px; }
+        .stat-item { padding: 10px 8px; }
+        .stat-icon { width: 29px; height: 29px; }
+        .stat-value { font-size: 13px; }
+        .save-actions .btn { padding: 0 10px; font-size: 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            scroll-behavior: auto !important;
+            transition-duration: .01ms !important;
+            animation-duration: .01ms !important;
+        }
+    }
+</style>
+</head>
+
+<body>
+<div class="app-container">
+
+    <!-- NAVEGACIÓN LATERAL -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-mark"><i class="ri-fingerprint-line"></i></div>
+            <div class="logo-name">
+                Portal de Evidencias
+                <span class="logo-subtitle">EXPEDIENTE DIGITAL</span>
+            </div>
+        </div>
+
+        <div class="sidebar-label">Espacio personal</div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="ri-home-5-line"></i><span>Inicio</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <i class="ri-user-3-line"></i><span>Perfil</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showToast('Sección de currículum en desarrollo.'); return false;">
+                <i class="ri-file-user-line"></i><span>Currículum</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showToast('Sección en desarrollo.'); return false;">
+                <i class="ri-more-line"></i><span>Más</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <strong>Portal de Evidencias</strong>
+            <p>Tu trayectoria académica y profesional organizada en un solo lugar.</p>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <div class="content-wrapper">
+
+            <div class="topbar">
+                <div class="breadcrumb">
+                    <a href="dashboard.html">Inicio</a>
+                    <i class="ri-arrow-right-s-line"></i>
+                    <a href="profile.html">Perfil</a>
+                    <i class="ri-arrow-right-s-line"></i>
+                    <span>Editar información</span>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="topbar-status">
+                        <span class="status-dot"></span>
+                        Espacio personal
+                    </div>
+                    <div class="header-avatar"><i class="ri-user-line"></i></div>
+                </div>
+            </div>
+
+            <header class="page-heading">
+                <div class="eyebrow">Configuración de cuenta</div>
+                <h1 class="page-title">Editar mi perfil</h1>
+            </header>
+
+            <form id="edit-profile-form" onsubmit="event.preventDefault(); saveProfile();">
+
+                <div class="profile-layout">
+
+                    <!-- COLUMNA PRINCIPAL -->
+                    <div class="main-column">
+
+<!-- INFORMACIÓN PERSONAL -->
+<section class="settings-card">
+    <div class="card-header">
+        <div>
+            <h2>Información personal</h2>
+            <p>Administra los datos de tu perfil.</p>
+        </div>
+    </div>
+
+    <div class="form-grid">
+        <div class="form-group">
+            <label for="input-names">Nombre(s)</label>
+            <div class="input-shell">
+                <input type="text" id="input-names" class="form-input"
+                       maxlength="100" placeholder="Tus nombres">
+            </div>
+            <span class="error-message" id="err-names">
+                Ingresa tus nombres (máximo 100 caracteres).
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="input-paternal-surname">Apellido paterno</label>
+            <div class="input-shell">
+                <input type="text" id="input-paternal-surname"
+                       class="form-input" maxlength="100"
+                       placeholder="Apellido paterno">
+            </div>
+            <span class="error-message" id="err-paternal-surname">
+                Ingresa un apellido paterno válido.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="input-maternal-surname">Apellido materno</label>
+            <div class="input-shell">
+                <input type="text" id="input-maternal-surname"
+                       class="form-input" maxlength="100"
+                       placeholder="Apellido materno">
+            </div>
+            <span class="error-message" id="err-maternal-surname">
+                El apellido materno no puede superar los 100 caracteres.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="input-email">Correo electrónico</label>
+            <div class="input-shell">
+                <input type="email" id="input-email" class="form-input"
+                       readonly>
+            </div>
+            <small>Correo asociado a tu cuenta de acceso.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="input-phone">Teléfono</label>
+            <div class="input-shell">
+                <input type="tel" id="input-phone" class="form-input"
+                       maxlength="25" placeholder="Número de teléfono">
+            </div>
+            <span class="error-message" id="err-phone">
+                El teléfono no puede superar los 25 caracteres.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="input-curp">CURP</label>
+            <div class="input-shell">
+                <input type="text" id="input-curp" class="form-input"
+                       maxlength="18" placeholder="Ingresa tu CURP">
+            </div>
+            <span class="error-message" id="err-curp">
+                Ingresa una CURP con formato válido de 18 caracteres.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="input-birthdate">Fecha de nacimiento</label>
+            <div class="input-shell">
+                <input type="date" id="input-birthdate" class="form-input">
+            </div>
+            <span class="error-message" id="err-birthdate">
+                La fecha de nacimiento no puede ser futura.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="input-bio">Biografía</label>
+            <div class="input-shell">
+                <textarea id="input-bio" class="form-input"
+                          maxlength="2000" rows="4"
+                          placeholder="Escribe una breve descripción sobre ti..."></textarea>
+            </div>
+            <small id="bio-counter">0 / 2000 caracteres</small>
+            <span class="error-message" id="err-bio">
+                La biografía no puede superar los 2000 caracteres.
+            </span>
+        </div>
+    </div>
+</section>
+                    </div>
+
+                    <!-- COLUMNA SECUNDARIA -->
+                    <div class="side-column">
+
+                        <!-- FOTO -->
+                        <section class="card photo-card">
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <div class="card-icon"><i class="ri-camera-line"></i></div>
+                                    <div>
+                                        <h2 class="card-title">Fotografía de perfil</h2>
+                                        <p class="card-description">Imagen de identificación.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="photo-content">
+                                <div class="avatar-wrapper">
+                                    <img src="" alt="Fotografía de perfil" class="avatar-img" id="current-avatar">
+                                    <div class="avatar-placeholder" id="avatar-placeholder">
+                                        <i class="ri-user-3-line"></i>
+                                    </div>
+                                    <button type="button" class="avatar-edit"
+                                            onclick="openModal('photo-source-modal')" aria-label="Cambiar fotografía">
+                                        <i class="ri-camera-line"></i>
+                                    </button>
+                                </div>
+
+                                <div class="photo-details">
+                                    <h3 class="photo-name" id="photo-name">Usuario</h3>
+                                    <p class="photo-email" id="photo-email">correo@ejemplo.com</p>
+                                    <p class="photo-note">
+                                        Utiliza una fotografía clara y reciente. Puedes subir una imagen
+                                        o tomarla directamente con tu cámara.
+                                    </p>
+                                    <div class="photo-actions">
+                                        <button type="button" class="btn btn-primary btn-full"
+                                                onclick="openModal('photo-source-modal')">
+                                            <i class="ri-image-edit-line"></i> Cambiar foto
+                                        </button>
+                                        <button type="button" class="btn btn-danger"
+                                                onclick="confirmRemovePhoto()" title="Eliminar fotografía">
+                                            <i class="ri-delete-bin-line"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- PERFIL PÚBLICO -->
+                        <section class="card">
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <div class="card-icon"><i class="ri-global-line"></i></div>
+                                    <div>
+                                        <h2 class="card-title">Perfil público</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="visibility-row">
+                                <div>
+                                    <div class="visibility-title">Visibilidad pública</div>
+                                    <p class="visibility-description">
+                                        Permite consultar tu perfil mediante un código de acceso.
+                                    </p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="toggle-public"
+       onchange="handleVisibilityToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <label class="access-code-label">Código de acceso</label>
+                            <div class="public-link-box">
+                                <button type="button" id="btn-generar-enlace"
+        class="btn btn-primary"
+        onclick="generarEnlacePublico()">
+    Generar código de acceso
+</button>
+                                <span class="public-link-text" id="access-code">P-EVID-8472X</span>
+                                <button type="button" class="copy-btn"
+                                        onclick="copyToClipboard('access-code')" title="Copiar código">
+                                    <i class="ri-file-copy-line"></i>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- ESTADÍSTICAS -->
+                        <section class="card">
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <div class="card-icon"><i class="ri-bar-chart-grouped-line"></i></div>
+                                    <div>
+                                        <h2 class="card-title">Actividad del perfil</h2>
+                                        <p class="card-description">Indicadores de ejemplo.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-icon"><i class="ri-eye-line"></i></div>
+                                    <div>
+                                        <div class="stat-value" id="stat-views">0</div>
+                                        <div class="stat-label">Visualizaciones</div>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon"><i class="ri-heart-line"></i></div>
+                                    <div>
+                                        <div class="stat-value" id="stat-likes">0</div>
+                                        <div class="stat-label">Me gusta</div>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon"><i class="ri-group-line"></i></div>
+                                    <div>
+                                        <div class="stat-value" id="stat-weekly">0</div>
+                                        <div class="stat-label">Visitas semanales</div>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon"><i class="ri-folder-open-line"></i></div>
+                                    <div>
+                                        <div class="stat-value" id="stat-downloads">0</div>
+                                        <div class="stat-label">Descargas Curriculums</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- ACCIONES DEL FORMULARIO -->
+                <div class="save-bar">
+                    <div class="save-note">
+                        <i class="ri-shield-check-line"></i>
+                        Revisa tus datos antes de guardar.
+                    </div>
+                    <div class="save-actions">
+                        <button type="button" class="btn btn-outline" onclick="cancelChanges()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="ri-save-line"></i>
+                            Guardar cambios
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- NAVEGACIÓN MÓVIL -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="bottom-nav-item">
+            <i class="ri-home-5-line"></i><span>Inicio</span>
+        </a>
+        <a href="profile.html" class="bottom-nav-item active">
+            <i class="ri-user-3-line"></i><span>Perfil</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="showToast('Sección de currículum en desarrollo.'); return false;">
+            <i class="ri-file-user-line"></i><span>CV</span>
+        </a>
+        <a href="#" class="bottom-nav-item" onclick="showToast('Sección en desarrollo.'); return false;">
+            <i class="ri-more-line"></i><span>Más</span>
+        </a>
+    </nav>
+</div>
+
+<!-- MODAL: ORIGEN DE FOTOGRAFÍA -->
+<div class="modal-overlay" id="photo-source-modal" onclick="closeModalOutside(event, 'photo-source-modal')">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Cambiar fotografía</h2>
+            <button type="button" class="modal-close" onclick="closeModal('photo-source-modal')">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="photo-options">
+                <label class="photo-option-btn">
+                    <i class="ri-image-add-line"></i>
+                    <span>Seleccionar imagen de mi dispositivo</span>
+                    <input type="file" accept="image/jpeg,image/png,image/webp" id="file-input"
+                           hidden onchange="handleFileSelect(event)">
+                </label>
+                <button type="button" class="photo-option-btn" onclick="startCamera()">
+                    <i class="ri-camera-line"></i>
+                    <span>Tomar fotografía con cámara</span>
+                </button>
+            </div>
+            <p class="field-hint" style="margin-top:15px;">
+                Formatos permitidos: JPG, PNG y WebP.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: CÁMARA -->
+<div class="modal-overlay" id="camera-modal" onclick="closeModalOutside(event, 'camera-modal')">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Tomar fotografía</h2>
+            <button type="button" class="modal-close" onclick="closeModal('camera-modal')">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <video id="camera-video" class="camera-video" autoplay playsinline></video>
+            <div class="camera-actions">
+                <button type="button" class="capture-btn" onclick="capturePhoto()" aria-label="Tomar fotografía">
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: EDITOR DE FOTOGRAFÍA -->
+<div class="modal-overlay" id="editor-modal" onclick="closeModalOutside(event, 'editor-modal')">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Editar fotografía</h2>
+            <button type="button" class="modal-close" onclick="closeModal('editor-modal')">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="editor-container">
+                <div class="canvas-wrapper">
+                    <canvas id="photo-canvas"></canvas>
+                </div>
+
+                <div>
+                    <div class="form-label" style="margin-bottom:10px;">Filtros</div>
+                    <div class="filter-gallery" id="filter-gallery"></div>
+                </div>
+
+                <div class="control-row">
+                    <label for="zoom-slider">Zoom</label>
+                    <input type="range" id="zoom-slider" min="0.5" max="3" step="0.1" value="1"
+                           oninput="updateCanvas()">
+                </div>
+
+                <div class="control-row">
+                    <label for="rotate-slider">Rotación</label>
+                    <input type="range" id="rotate-slider" min="-180" max="180" step="1" value="0"
+                           oninput="updateCanvas()">
+                </div>
+
+                <button type="button" class="btn btn-outline" onclick="resetEditor()">
+                    <i class="ri-refresh-line"></i> Restablecer ajustes
+                </button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="closeModal('editor-modal')">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="applyPhotoEdit()">Aplicar cambios</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: MENSAJE -->
+<div class="modal-overlay" id="message-modal" onclick="closeModalOutside(event, 'message-modal')">
+    <div class="modal-content" style="max-width:390px;">
+        <div class="modal-body" style="padding:30px;text-align:center;">
+            <div id="msg-icon" style="font-size:48px;color:var(--success);margin-bottom:12px;">
+                <i class="ri-checkbox-circle-line"></i>
+            </div>
+            <h2 class="modal-title" id="msg-title" style="margin-bottom:9px;">Éxito</h2>
+            <p id="msg-desc" style="color:var(--muted);font-size:12px;line-height:1.7;">Mensaje.</p>
+        </div>
+        <div class="modal-footer" style="justify-content:center;">
+            <button type="button" class="btn btn-primary" onclick="closeModal('message-modal')">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: CONFIRMACIÓN -->
+<div class="modal-overlay" id="confirm-modal" onclick="closeModalOutside(event, 'confirm-modal')">
+    <div class="modal-content" style="max-width:390px;">
+        <div class="modal-header">
+            <h2 class="modal-title" id="confirm-title">Confirmar acción</h2>
+            <button type="button" class="modal-close" onclick="closeModal('confirm-modal')">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p id="confirm-desc" style="color:var(--muted);font-size:12px;line-height:1.7;">
+                ¿Estás seguro de continuar?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="closeModal('confirm-modal')">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirm-action-btn">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<!-- NOTIFICACIÓN -->
+<div class="toast" id="toast">
+    <i class="ri-information-line"></i>
+    <span id="toast-msg">Mensaje</span>
+</div>
+
+<script src="/js/edit_profile.js"></script>
+</body>
+</html>

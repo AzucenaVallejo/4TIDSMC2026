@@ -1,0 +1,22 @@
+
+{
+  "id": "/",
+  "name": "Portal de Evidencias",
+  "short_name": "PORTAFOLIO",
+  "description": "Plataforma de gestión de evidencias académicas y profesionales.",
+  "lang": "es-MX",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#17324d",
+  "icons": [
+    {
+      "src": "/img/LogoNuevo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
