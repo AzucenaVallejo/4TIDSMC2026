@@ -1,0 +1,1045 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#142D35">
+    <title>Acceso como invitado | Portal de Evidencias</title>
+    <link rel="icon" href="img/PortalEvidenciasIcon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#17324d">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ink: #142D35;
+            --ink-soft: #203F47;
+            --petrol: #28645F;
+            --petrol-light: #E2EFEB;
+            --copper: #B77A4B;
+            --paper: #F7F5EF;
+            --white: #FFFFFF;
+            --text: #25363A;
+            --muted: #718083;
+            --border: #E1E6E1;
+            --danger: #A84E43;
+            --danger-light: #F8EAE6;
+            --font-title: 'Manrope', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--ink);
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 36px 36px;
+            font-family: var(--font-body);
+            color: var(--text);
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1080px;
+            min-height: 680px;
+            display: grid;
+            grid-template-columns: .94fr 1.06fr;
+            overflow: hidden;
+            border-radius: 8px;
+            background: var(--paper);
+            box-shadow: 0 30px 90px rgba(0,0,0,.28);
+            position: relative;
+        }
+
+        /* Panel lateral de identidad */
+
+        .brand-panel {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 680px;
+            padding: 42px 43px 34px;
+            overflow: hidden;
+            color: var(--white);
+            background:
+                radial-gradient(ellipse at 85% 15%, rgba(62,119,107,.28), transparent 38%),
+                linear-gradient(145deg, #193840 0%, #142D35 55%, #10242C 100%);
+        }
+
+        .brand-panel::before {
+            content: "";
+            position: absolute;
+            width: 460px;
+            height: 460px;
+            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 50%;
+            top: 25%;
+            left: -210px;
+            pointer-events: none;
+        }
+
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 50%;
+            top: 34%;
+            left: -145px;
+            pointer-events: none;
+        }
+
+        .brand-top,
+        .brand-main,
+        .brand-bottom {
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-top {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .brand-symbol {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 5px;
+            color: #D7B28F;
+        }
+
+        .brand-symbol svg {
+            width: 23px;
+            height: 23px;
+        }
+
+        .brand-name {
+            font-family: var(--font-title);
+            font-size: .95rem;
+            font-weight: 800;
+            letter-spacing: .015em;
+        }
+
+        .brand-caption {
+            margin-top: 3px;
+            color: rgba(255,255,255,.55);
+            font-size: .68rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .brand-main {
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 21px;
+            color: #D7B28F;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 26px;
+            height: 1px;
+            background: var(--copper);
+        }
+
+        .brand-heading {
+            max-width: 410px;
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+            font-weight: 600;
+            letter-spacing: -.065em;
+            line-height: 1.13;
+        }
+
+        .brand-heading span {
+            display: block;
+            color: #A9C9BD;
+        }
+
+        .brand-description {
+            max-width: 350px;
+            margin-top: 22px;
+            color: rgba(255,255,255,.68);
+            font-size: .9rem;
+            line-height: 1.8;
+        }
+
+        /* Ilustración */
+
+        .identity-art {
+            width: 100%;
+            max-width: 360px;
+            height: 190px;
+            margin-top: 35px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .art-ring {
+            position: absolute;
+            width: 155px;
+            height: 155px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 50%;
+        }
+
+        .art-ring.inner {
+            width: 115px;
+            height: 115px;
+            border-color: rgba(169,201,189,.28);
+        }
+
+        .fingerprint {
+            position: relative;
+            z-index: 2;
+            width: 115px;
+            height: 115px;
+            color: #A9C9BD;
+        }
+
+        .fingerprint svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .art-lock {
+            position: absolute;
+            right: 25%;
+            bottom: 18px;
+            z-index: 3;
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border: 3px solid #193840;
+            border-radius: 50%;
+            background: var(--copper);
+            color: white;
+        }
+
+        .art-lock svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .brand-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,.13);
+            color: rgba(255,255,255,.48);
+            font-size: .68rem;
+        }
+
+        .brand-bottom span:last-child {
+            color: #D7B28F;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            font-size: .62rem;
+        }
+
+        /* Panel de consulta */
+
+        .access-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px clamp(38px, 6vw, 78px);
+            background: var(--paper);
+            position: relative;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 30px;
+            left: 38px;
+            right: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-back {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--ink);
+            transition: background .2s, border-color .2s, transform .2s;
+        }
+
+        .btn-back:hover {
+            background: var(--petrol-light);
+            border-color: #B7CEC4;
+            transform: translateX(-2px);
+        }
+
+        .btn-back svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .top-label {
+            color: var(--muted);
+            font-size: .66rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .access-content {
+            width: 100%;
+            max-width: 365px;
+            margin: 30px auto 0;
+        }
+
+        .access-index {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 27px;
+            color: var(--muted);
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .access-index-mark {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--petrol);
+        }
+
+        .access-title {
+            font-family: var(--font-title);
+            color: var(--ink);
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -.06em;
+            line-height: 1.15;
+        }
+
+        .access-subtitle {
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+        .form-divider {
+            width: 100%;
+            height: 1px;
+            margin: 27px 0 26px;
+            background: var(--border);
+        }
+
+        /* Formulario */
+
+        .guest-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 19px;
+        }
+
+        .input-group {
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--ink);
+            font-size: .75rem;
+            font-weight: 700;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            min-height: 53px;
+            padding: 0 47px 0 15px;
+            border: 1px solid #D7DFD9;
+            border-radius: 4px;
+            outline: none;
+            background: var(--white);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: .88rem;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .form-input::placeholder {
+            color: #A0AAA5;
+        }
+
+        .form-input:hover {
+            border-color: #AEBDB4;
+        }
+
+        .form-input:focus {
+            border-color: var(--petrol);
+            box-shadow: 0 0 0 3px rgba(40,100,95,.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 19px;
+            height: 19px;
+            color: #8A9992;
+            pointer-events: none;
+        }
+
+        .helper-text {
+            margin-top: -5px;
+            color: var(--muted);
+            font-size: .78rem;
+            line-height: 1.7;
+        }
+
+        /* Botón de consulta */
+
+        .btn-primary {
+            width: 100%;
+            min-height: 54px;
+            margin-top: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 17px;
+            border: 1px solid var(--ink);
+            border-radius: 4px;
+            background: var(--ink);
+            color: white;
+            font-size: .87rem;
+            font-weight: 700;
+            transition: background .2s, border-color .2s, transform .2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--petrol);
+            border-color: var(--petrol);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-arrow {
+            font-size: 1.25rem;
+            transition: transform .2s;
+        }
+
+        .btn-primary:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        .link-secondary {
+            display: block;
+            margin-top: 24px;
+            color: var(--petrol);
+            text-align: center;
+            font-size: .8rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .link-secondary:hover {
+            color: var(--ink);
+            text-decoration: underline;
+        }
+
+        .access-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 25px;
+            color: #929E97;
+            font-size: .66rem;
+        }
+
+        .access-footer svg {
+            width: 14px;
+            height: 14px;
+            color: var(--petrol);
+        }
+
+        /* Modales */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(13,30,35,.72);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s, visibility .25s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 365px;
+            padding: 32px;
+            border-radius: 5px;
+            background: var(--paper);
+            position: relative;
+            transform: translateY(12px);
+            transition: transform .25s;
+            box-shadow: 0 25px 70px rgba(0,0,0,.3);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 31px;
+            height: 31px;
+            display: grid;
+            place-items: center;
+            border: none;
+            border-radius: 3px;
+            background: #E9EDE8;
+            color: var(--muted);
+            font-size: 1.2rem;
+        }
+
+        .modal-close:hover {
+            background: #DDE5DF;
+            color: var(--ink);
+        }
+
+        .modal-symbol {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 20px;
+            display: grid;
+            place-items: center;
+            border-radius: 4px;
+            background: var(--petrol-light);
+            color: var(--petrol);
+        }
+
+        .modal-symbol.warning {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .modal-symbol.info {
+            background: var(--petrol-light);
+            color: var(--petrol);
+        }
+
+        .modal-symbol svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .modal-title {
+            color: var(--ink);
+            font-family: var(--font-title);
+            font-size: 1.35rem;
+            letter-spacing: -.04em;
+        }
+
+        .modal-message {
+            margin-top: 10px;
+            margin-bottom: 23px;
+            color: var(--muted);
+            font-size: .84rem;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .modal-btn {
+            width: 100%;
+            min-height: 47px;
+            border: none;
+            border-radius: 4px;
+            background: var(--ink);
+            color: white;
+            font-size: .85rem;
+            font-weight: 700;
+            transition: background .2s;
+        }
+
+        .modal-btn:hover {
+            background: var(--petrol);
+        }
+
+        /* Animaciones */
+
+        .brand-main > * {
+            opacity: 0;
+            animation: reveal .65s ease forwards;
+        }
+
+        .brand-main .eyebrow {
+            animation-delay: .1s;
+        }
+
+        .brand-main .brand-heading {
+            animation-delay: .2s;
+        }
+
+        .brand-main .brand-description {
+            animation-delay: .3s;
+        }
+
+        .identity-art {
+            opacity: 0;
+            animation: reveal .7s ease forwards .4s;
+        }
+
+        .access-content {
+            opacity: 0;
+            animation: reveal .65s ease forwards .15s;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(13px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* Adaptación móvil */
+
+        @media (max-width: 760px) {
+            body {
+                padding: 0;
+                background: var(--paper);
+            }
+
+            .app-container {
+                min-height: 100vh;
+                max-width: 520px;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .brand-panel {
+                min-height: auto;
+                padding: 25px 28px 22px;
+            }
+
+            .brand-symbol {
+                width: 38px;
+                height: 38px;
+            }
+
+            .brand-main {
+                margin-top: 37px;
+                margin-bottom: 5px;
+            }
+
+            .eyebrow {
+                margin-bottom: 14px;
+                font-size: .63rem;
+            }
+
+            .brand-heading {
+                font-size: clamp(2.2rem, 8vw, 2.9rem);
+            }
+
+            .brand-description {
+                max-width: 370px;
+                margin-top: 13px;
+                font-size: .82rem;
+            }
+
+            .identity-art {
+                display: none;
+            }
+
+            .brand-bottom {
+                margin-top: 28px;
+                padding-top: 15px;
+                font-size: .62rem;
+            }
+
+            .access-panel {
+                padding: 52px 28px 30px;
+                justify-content: flex-start;
+            }
+
+            .top-bar {
+                top: 14px;
+                left: 25px;
+                right: 25px;
+            }
+
+            .access-content {
+                max-width: 430px;
+                margin-top: 0;
+            }
+
+            .access-index {
+                margin-bottom: 20px;
+            }
+
+            .access-title {
+                font-size: 2.05rem;
+            }
+
+            .form-divider {
+                margin: 23px 0;
+            }
+
+            .access-footer {
+                margin-top: 25px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .brand-panel {
+                padding-left: 22px;
+                padding-right: 22px;
+            }
+
+            .access-panel {
+                padding-left: 22px;
+                padding-right: 22px;
+            }
+
+            .brand-heading {
+                font-size: 2.1rem;
+            }
+
+            .modal-card {
+                padding: 27px 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="app-container">
+
+        <!-- Panel de identidad -->
+        <section class="brand-panel">
+
+            <header class="brand-top">
+                <div class="brand-symbol" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 20 7.5V16.5L12 21 4 16.5V7.5L12 3Z"/>
+                        <path d="M8 9H16M8 12H16M8 15H13"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <div class="brand-name">Portal de Evidencias</div>
+                    <div class="brand-caption">Expediente académico digital</div>
+                </div>
+            </header>
+
+            <div class="brand-main">
+
+                <div class="eyebrow">Consulta de perfiles públicos</div>
+
+                <h1 class="brand-heading">
+                    Conoce su
+                    <span>trayectoria.</span>
+                </h1>
+
+                <div class="identity-art" aria-hidden="true">
+
+                    <div class="art-ring"></div>
+                    <div class="art-ring inner"></div>
+
+                    <div class="fingerprint">
+                        <svg viewBox="0 0 120 120" fill="none"
+                             stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round">
+                            <path d="M60 15C35 15 19 34 19 57"/>
+                            <path d="M60 25C41 25 29 39 29 58"/>
+                            <path d="M60 35C47 35 39 45 39 59"/>
+                            <path d="M60 45C53 45 49 51 49 60"/>
+                            <path d="M60 15C85 15 101 34 101 57"/>
+                            <path d="M60 25C79 25 91 39 91 58"/>
+                            <path d="M60 35C73 35 81 45 81 59"/>
+                            <path d="M60 55C60 73 55 87 48 99"/>
+                            <path d="M70 58C70 77 66 94 59 108"/>
+                            <path d="M80 61C80 78 76 93 71 104"/>
+                            <path d="M40 61C40 77 44 89 50 100"/>
+                            <path d="M30 61C30 75 35 89 42 99"/>
+                            <path d="M20 62C20 74 24 85 31 94"/>
+                            <path d="M90 62C90 74 86 85 79 94"/>
+                        </svg>
+                    </div>
+
+                    <div class="art-lock">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="10.5" cy="10.5" r="6.5"/>
+                            <path d="m16 16 5 5"/>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer class="brand-bottom">
+                <span>Plataforma de gestión académica</span>
+                <span>Consulta pública</span>
+            </footer>
+
+        </section>
+
+        <!-- Panel de consulta -->
+        <section class="access-panel">
+
+            <header class="top-bar">
+                <button class="btn-back" type="button"
+                        onclick="handleNavigation('login.html')"
+                        aria-label="Regresar al inicio de sesión"
+                        title="Regresar al inicio de sesión">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+
+                <span class="top-label">Portal / Invitado</span>
+            </header>
+
+            <div class="access-content">
+
+                <div class="access-index">
+                    <span class="access-index-mark"></span>
+                    ACCESO PÚBLICO
+                </div>
+
+                <h2 class="access-title">Consultar perfil.</h2>
+
+                <p class="access-subtitle">
+                    Introduce el código o enlace proporcionado por el estudiante
+                    para consultar su información profesional pública.
+                </p>
+
+                <div class="form-divider"></div>
+
+                <form class="guest-form" id="guestForm"
+                      onsubmit="validarAccesoInvitado(event)" novalidate>
+
+                    <div class="input-group">
+                        <label class="form-label" for="codigo-acceso">
+                            Código o enlace del perfil
+                        </label>
+
+                        <div class="input-wrapper">
+                            <input
+                                type="text"
+                                class="form-input"
+                                id="codigo-acceso"
+                                name="codigoAcceso"
+                                placeholder="Introduce el código o enlace"
+                                autocomplete="off"
+                                spellcheck="false"
+                                required
+                            >
+
+                            <svg class="input-icon" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="7"/>
+                                <path d="m16 16 5 5"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="btn-consultar">
+                        <span>Consultar perfil</span>
+                        <span class="btn-arrow" aria-hidden="true">→</span>
+                    </button>
+
+                </form>
+
+                <a href="index.html" class="link-secondary">
+                    Volver al inicio
+                </a>
+
+                <footer class="access-footer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="M12 11V16M12 8H12.01"/>
+                    </svg>
+                    Consulta de información profesional pública
+                </footer>
+
+            </div>
+        </section>
+
+        <!-- Modal de error -->
+        <div class="modal-overlay" id="error-modal" aria-hidden="true">
+
+            <div class="modal-card" role="dialog" aria-modal="true"
+                 aria-labelledby="errorModalTitle"
+                 aria-describedby="errorModalMessage">
+
+                <button class="modal-close" type="button"
+                        onclick="cerrarModal('error-modal')"
+                        aria-label="Cerrar">
+                    ×
+                </button>
+
+                <div class="modal-symbol warning">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3 22 20H2L12 3Z"/>
+                        <path d="M12 9V13M12 16H12.01"/>
+                    </svg>
+                </div>
+
+                <h3 class="modal-title" id="errorModalTitle">
+                    Código requerido
+                </h3>
+
+                <p class="modal-message" id="errorModalMessage">
+                    Por favor, introduce el código o enlace del perfil que deseas consultar.
+                </p>
+
+                <button class="modal-btn" type="button"
+                        onclick="cerrarModal('error-modal')">
+                    Entendido
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Modal informativo -->
+        <div class="modal-overlay" id="notice-modal" aria-hidden="true">
+
+            <div class="modal-card" role="dialog" aria-modal="true"
+                 aria-labelledby="noticeModalTitle"
+                 aria-describedby="noticeModalMessage">
+
+                <button class="modal-close" type="button"
+                        onclick="cerrarModal('notice-modal')"
+                        aria-label="Cerrar">
+                    ×
+                </button>
+
+                <div class="modal-symbol info">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="M12 11V16M12 8H12.01"/>
+                    </svg>
+                </div>
+
+                <h3 class="modal-title" id="noticeModalTitle">
+                    Módulo en desarrollo
+                </h3>
+
+                <p class="modal-message" id="noticeModalMessage">
+                    La verificación de códigos y consulta de perfiles estará
+                    disponible cuando se implemente el módulo correspondiente
+                    del backend.
+                </p>
+
+                <button class="modal-btn" type="button"
+                        onclick="cerrarModal('notice-modal')">
+                    Entendido
+                </button>
+
+            </div>
+        </div>
+
+    </main>
+
+
+<script src="/js/guest.js"></script>
+
+</body>
+</html>

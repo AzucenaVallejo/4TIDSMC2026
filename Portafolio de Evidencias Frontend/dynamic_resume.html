@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10263D">
+    <title>Constructor de Currículum | Portal de Evidencias</title>
+    <link rel="icon" href="img/PortalEvidenciasIcon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#17324d">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script>
+        window.PORTAL_API_BASE = 'https://pureblood-starfish-happening.ngrok-free.dev/api';
+    </script>
+    <script src="./js/themes.js"></script>
+
+    <style>
+        /* ==========================================
+           1. VARIABLES GENERALES Y TEMAS
+        ========================================== */
+        :root {
+            --background: var(--theme-base, #F4F6F8);
+            --surface: var(--theme-surface, #FFFFFF);
+            --surface-soft: var(--theme-surface-hover, #F8FAFC);
+            --text: var(--theme-text-main, #263238);
+            --muted: var(--theme-text-muted, #71808A);
+            --border: var(--theme-border, #E3E9EE);
+
+            --navy: var(--theme-text-main, #16324F);
+            --navy-deep: var(--sidebar-background, #10263D);
+            --teal: var(--theme-primary, #2A9D8F);
+            --teal-light: var(--theme-primary-soft, #E4F4F1);
+            --teal-hover: var(--theme-primary-hover, #237F75);
+
+            --blue: #245B7A;
+            --blue-light: #EAF1F6;
+            --danger: #D9536F;
+
+            --font-body: 'DM Sans', sans-serif;
+            --font-heading: 'Manrope', sans-serif;
+
+            --sidebar-width: 260px;
+            --radius-xl: 24px;
+            --radius-lg: 18px;
+            --radius-md: 13px;
+            --radius-sm: 9px;
+
+            --shadow-card: 0 5px 22px rgba(22,50,79,.045);
+            --shadow-hover: 0 14px 32px rgba(22,50,79,.10);
+            --transition: .25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            visibility: hidden;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .hide-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .hide-scroll::-webkit-scrollbar-thumb {
+            background: rgba(113,128,138,.2);
+            border-radius: 10px;
+        }
+
+        /* ==========================================
+           2. SIDEBAR
+        ========================================== */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 19px;
+            background: var(--navy-deep);
+            color: white;
+            box-shadow: 4px 0 24px rgba(0,0,0,.05);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px;
+            margin-bottom: 48px;
+        }
+
+        .brand-symbol {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: rgba(42,157,143,.17);
+            color: #65C6B8;
+            font-size: 25px;
+        }
+
+        .brand-name {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-name strong {
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -.4px;
+        }
+
+        .brand-name span {
+            color: #AABBC8;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-section-label {
+            padding: 0 13px;
+            margin-bottom: 13px;
+            color: #8299AA;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav-item {
+            width: 100%;
+            min-height: 47px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 0 14px;
+            border-radius: 11px;
+            background: transparent;
+            color: var(--sidebar-link, #AABBC8);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: left;
+            transition: var(--transition);
+        }
+
+        .nav-item i {
+            font-size: 19px;
+        }
+
+        .nav-item:hover {
+            background: var(--sidebar-link-hover, rgba(255,255,255,.05));
+            color: var(--sidebar-text, #fff);
+            transform: translateX(3px);
+        }
+
+        .nav-item.active {
+            background: var(--sidebar-link-active, rgba(42,157,143,.1));
+            color: var(--sidebar-link-active-text, #65C6B8);
+            font-weight: 700;
+            box-shadow: inset 3px 0 0 var(--theme-primary, #2A9D8F);
+        }
+
+        /* ==========================================
+           3. CONTENIDO PRINCIPAL Y HEADER
+        ========================================== */
+        .main-content {
+            min-height: 100vh;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 24px 48px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0,0,0,.02);
+        }
+
+        .header-context h1 {
+            color: var(--navy);
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        .header-context p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-primary,
+        .btn-secondary,
+        .btn-danger,
+        .btn-print {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(22,50,79,.15);
+        }
+
+        .btn-secondary {
+            background: var(--surface-soft);
+            border: 1px solid var(--border);
+            color: var(--navy);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .btn-print {
+            background: var(--teal);
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: var(--teal-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================
+           4. CONSTRUCTOR Y PANEL DE CONFIGURACIÓN
+        ========================================== */
+        .builder-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100vh - 90px);
+        }
+
+        .config-panel {
+            width: 400px;
+            min-width: 280px;
+            max-width: 55%;
+            flex-shrink: 0;
+            background: var(--surface);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* DIVISOR REDIMENSIONABLE */
+        .resizer {
+            width: 8px;
+            background-color: var(--border);
+            cursor: col-resize;
+            flex-shrink: 0;
+            z-index: 10;
+            transition: background 0.2s ease;
+        }
+
+        .resizer:hover,
+        .resizer.resizing {
+            background-color: var(--teal);
+        }
+
+        .config-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-soft);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .config-header h2 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .config-header h2 i {
+            color: var(--teal);
+            font-size: 18px;
+        }
+
+        .config-section {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-toggle {
+            width: 100%;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            color: var(--navy);
+            font-weight: 700;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .section-toggle:hover {
+            background: var(--surface-soft);
+        }
+
+        .section-toggle i {
+            color: var(--muted);
+            transition: transform .3s ease;
+        }
+
+        .section-toggle[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0 24px 20px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: slideDown .3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .item-toggle {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .item-toggle:hover {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        .item-toggle input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--muted);
+            border-radius: 4px;
+            margin-top: 2px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .item-toggle input[type="checkbox"]:checked {
+            background: var(--teal);
+            border-color: var(--teal);
+        }
+
+        .item-toggle input[type="checkbox"]:checked::after {
+            content: "\EB7B";
+            font-family: "remixicon";
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy);
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-subtitle {
+            font-size: 11px;
+            color: var(--muted);
+            display: block;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty-state-msg {
+            padding: 15px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 11px;
+            background: var(--surface-soft);
+            border-radius: 8px;
+            border: 1px dashed var(--border);
+        }
+
+        .empty-state-msg a {
+            color: var(--teal);
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .preview-panel {
+            flex: 1;
+            min-width: 0;
+            background: #E0E5E9;
+            overflow: auto;
+            display: block; /* Flex center puede cortar márgenes. Block es más seguro */
+            padding: 1px 0; /* Evita que el margin collapse del documento A4 con el panel */
+        }
+
+        /* ==========================================
+           5. CURRÍCULUM A4 - DISEÑO PROFESIONAL
+        ========================================== */
+        /* ==========================================
+   5. CURRÍCULUM - TAMAÑO CARTA
+========================================== */
+.a4-document {
+    --cv-navy: #142D46;
+    --cv-navy-soft: #1D405F;
+    --cv-accent: #B7C9D8;
+    --cv-text: #263746;
+    --cv-muted: #647586;
+    --cv-line: #DCE4EA;
+    --cv-sidebar-text: #F4F7FA;
+
+    width: 215.9mm;
+    min-height: 279.4mm;
+    margin: 35px auto;
+    display: flex;
+    padding: 0;
+    background: #FFFFFF;
+    color: var(--cv-text);
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.5;
+    box-shadow: 0 12px 42px rgba(15,35,55,.17);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+        /* Columna izquierda */
+        .cv-sidebar {
+            width: 34%;
+            flex-shrink: 0;
+            padding: 34px 25px 38px;
+            background: var(--cv-navy);
+            color: var(--cv-sidebar-text);
+            display: flex;
+            flex-direction: column;
+            gap: 27px;
+        }
+
+        .cv-photo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4px;
+        }
+
+        .cv-photo {
+            width: 122px;
+            height: 122px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,.85);
+            box-shadow: 0 5px 16px rgba(0,0,0,.2);
+        }
+
+        .cv-sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .cv-sidebar-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 10pt;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: 1.25px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,.3);
+        }
+
+        .cv-contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cv-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 8.5pt;
+            line-height: 1.45;
+            overflow-wrap: anywhere;
+        }
+
+        .cv-contact-icon {
+            width: 23px;
+            height: 23px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,.45);
+            border-radius: 50%;
+            color: #FFFFFF;
+            font-size: 11px;
+        }
+
+        .cv-sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cv-sidebar-list li {
+            position: relative;
+            padding-left: 13px;
+            margin-bottom: 8px;
+            color: #E5EDF3;
+            font-size: 9pt;
+            line-height: 1.45;
+        }
+
+        .cv-sidebar-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cv-accent);
+        }
+
+        .cv-edu-item {
+            margin-bottom: 17px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .cv-edu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .cv-edu-degree {
+            font-size: 9.2pt;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.35;
+            margin-bottom: 4px;
+        }
+
+        .cv-edu-school {
+            color: #D3DFE8;
+            font-size: 8.5pt;
+            line-height: 1.4;
+        }
+
+        .cv-edu-date {
+            color: #AFC1D0;
+            font-size: 8pt;
+            margin-top: 4px;
+        }
+
+        /* Columna derecha */
+        .cv-main {
+            width: 66%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+        }
+
+        .cv-main-header {
+            position: relative;
+            padding: 47px 38px 38px;
+            background: #F2F5F8;
+            border-bottom: 4px solid var(--cv-navy);
+        }
+
+        .cv-header-kicker {
+            color: var(--cv-muted);
+            font-family: 'Manrope', sans-serif;
+            font-size: 8pt;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 13px;
+        }
+
+        .cv-name {
+            color: var(--cv-navy);
+            font-family: 'Manrope', sans-serif;
+            font-size: 27pt;
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -.8px;
+            text-transform: uppercase;
+            overflow-wrap: anywhere;
+            margin-bottom: 12px;
+        }
+
+        .cv-title {
+            color: var(--cv-navy-soft);
+            font-size: 10pt;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .cv-main-body {
+            padding: 34px 38px 42px;
+            display: flex;
+            flex-direction: column;
+            gap: 27px;
+        }
+
+        .cv-section-main {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .cv-main-title {
+            color: var(--cv-navy);
+            font-family: 'Manrope', sans-serif;
+            font-size: 11pt;
+            font-weight: 800;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--cv-line);
+            position: relative;
+        }
+
+        .cv-main-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 42px;
+            height: 2px;
+            background: var(--cv-navy-soft);
+        }
+
+        .cv-summary {
+            color: var(--cv-text);
+            font-size: 9.2pt;
+            line-height: 1.7;
+            text-align: justify;
+            overflow-wrap: anywhere;
+        }
+
+        /* Experiencia y proyectos */
+        .cv-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 19px;
+        }
+
+        .cv-timeline-item {
+            position: relative;
+            padding-left: 15px;
+            border-left: 2px solid #DCE4EA;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .cv-timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cv-navy-soft);
+        }
+
+        .cv-item-title {
+            color: var(--cv-navy);
+            font-size: 10pt;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-bottom: 3px;
+            overflow-wrap: anywhere;
+        }
+
+        .cv-item-subtitle {
+            color: var(--cv-navy-soft);
+            font-size: 9pt;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .cv-item-date {
+            color: var(--cv-muted);
+            font-size: 8pt;
+            font-weight: 600;
+            letter-spacing: .3px;
+            margin-bottom: 7px;
+        }
+
+        .cv-item-desc {
+            color: var(--cv-text);
+            font-size: 8.8pt;
+            line-height: 1.6;
+            text-align: justify;
+            overflow-wrap: anywhere;
+        }
+
+        /* Estados vacíos */
+        .cv-empty {
+            color: var(--cv-muted);
+            font-size: 9pt;
+            font-style: italic;
+        }
+
+        /* ==========================================
+           6. MODALES Y NOTIFICACIONES
+        ========================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(16,38,61,.75);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .auth-modal {
+            width: 100%;
+            max-width: 410px;
+            padding: 35px 30px;
+            border-radius: 20px;
+            background: white;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,.2);
+            transform: translateY(20px);
+            transition: transform .3s;
+        }
+
+        .modal-overlay.show .auth-modal {
+            transform: translateY(0);
+        }
+
+        .auth-modal-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            border-radius: 16px;
+            background: var(--blue-light);
+            color: var(--blue);
+            font-size: 30px;
+            display: grid;
+            place-items: center;
+        }
+
+        .auth-modal h2 {
+            margin-bottom: 10px;
+            color: var(--navy);
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .auth-modal p {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .toast-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.1);
+            animation: slideIn .3s forwards;
+            pointer-events: auto;
+        }
+
+        .toast i {
+            font-size: 18px;
+        }
+
+        .toast.success i {
+            color: var(--teal);
+        }
+
+        .toast.error i {
+            color: var(--danger);
+        }
+
+        .toast.info i {
+            color: var(--blue);
+        }
+
+        .toast span {
+            font-size: 12px;
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,.8);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal);
+        }
+
+        .loading-overlay i {
+            font-size: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ==========================================
+           7. IMPRESIÓN A4
+        ========================================== */
+        /* ==========================================
+   7. IMPRESIÓN Y EXPORTACIÓN PDF - CARTA
+========================================== */
+@media print {
+
+    @page {
+        size: letter portrait;
+        margin: 0;
+    }
+
+    html,
+    body {
+        width: 215.9mm !important;
+        min-height: 279.4mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #FFFFFF !important;
+        overflow: visible !important;
+    }
+
+    body {
+        visibility: hidden;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .sidebar,
+    .top-header,
+    .config-panel,
+    .resizer,
+    .toast-container,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    .main-content {
+        display: block !important;
+        width: 215.9mm !important;
+        min-height: 279.4mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .builder-container {
+        display: block !important;
+        width: 215.9mm !important;
+        height: auto !important;
+        min-height: 279.4mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    .preview-panel {
+        display: block !important;
+        width: 215.9mm !important;
+        min-height: 279.4mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: #FFFFFF !important;
+    }
+
+    .a4-document {
+        display: flex !important;
+        position: relative !important;
+        width: 215.9mm !important;
+        min-width: 215.9mm !important;
+        height: 279.4mm !important;
+        min-height: 279.4mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        visibility: visible !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .cv-sidebar,
+    .cv-main,
+    .cv-main-header,
+    .cv-main-body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .cv-timeline-item,
+    .cv-edu-item,
+    .cv-sidebar-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+ /* ==========================================
+   8. RESPONSIVIDAD
+========================================== */
+
+@media (max-width: 1200px) {
+    .top-header {
+        padding: 22px 28px;
+    }
+
+    .preview-panel {
+        overflow: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .a4-document {
+        transform: scale(.82);
+        transform-origin: top center;
+        flex-shrink: 0;
+        margin-bottom: -45mm;
+    }
+}
+
+@media (max-width: 1024px) {
+    .builder-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .resizer {
+        display: none;
+    }
+
+    .config-panel {
+        width: 100% !important;
+        max-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+
+    .preview-panel {
+        width: 100%;
+        min-height: 900px;
+        overflow-x: auto;
+        overflow-y: visible;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 30px 0;
+    }
+
+    .a4-document {
+        transform: scale(.78);
+        transform-origin: top center;
+        flex-shrink: 0;
+        margin-bottom: -60mm;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .top-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .preview-panel {
+        width: 100%;
+        min-height: 760px;
+        overflow-x: auto;
+        overflow-y: visible;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+
+    .a4-document {
+        transform: scale(.62);
+        transform-origin: top center;
+        flex-shrink: 0;
+        margin-bottom: -100mm;
+    }
+}
+
+@media (max-width: 480px) {
+    .preview-panel {
+        min-height: 650px;
+        padding: 15px 0;
+    }
+
+    .a4-document {
+        transform: scale(.48);
+        transform-origin: top center;
+        margin-bottom: -130mm;
+    }
+
+    .config-panel {
+        max-height: 55vh;
+    }
+
+    .top-header {
+        padding: 12px 15px;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- Protección de sesión -->
+    <div class="modal-overlay" id="sessionModal">
+        <div class="auth-modal">
+            <div class="auth-modal-icon">
+                <i class="ri-shield-keyhole-line"></i>
+            </div>
+            <h2>Sesión requerida</h2>
+            <p>Debes iniciar sesión para construir y descargar tu currículum utilizando tu información guardada.</p>
+            <button class="btn-primary" style="width:100%;" onclick="window.location.href='index.html'">
+                Ir al inicio
+            </button>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-symbol">
+                <i class="ri-fingerprint-line"></i>
+            </div>
+            <div class="brand-name">
+                <strong>Portal de Evidencias</strong>
+                <span>Espacio profesional</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section-label">Menú principal</div>
+
+        <nav class="nav-links">
+            <a href="dashboard.html" class="nav-item">
+                <i class="ri-home-5-line"></i> Inicio
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="ri-user-3-line"></i> Mi perfil
+            </a>
+            <a href="academic_qualifications.html" class="nav-item">
+                <i class="ri-graduation-cap-line"></i> Formación
+            </a>
+            <a href="job_experience.html" class="nav-item">
+                <i class="ri-briefcase-line"></i> Experiencia
+            </a>
+            <a href="skills.html" class="nav-item">
+                <i class="ri-lightbulb-flash-line"></i> Habilidades
+            </a>
+            <a href="dynamic_resume.html" class="nav-item active">
+                <i class="ri-file-list-3-line"></i> Currículum
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+
+        <header class="top-header">
+            <div class="header-context">
+                <h1>Constructor de Currículum</h1>
+                <p>Configura la información visible y genera tu documento PDF.</p>
+            </div>
+
+            <div class="header-actions">
+                <button class="btn-secondary" onclick="saveConfiguration()" id="btnSaveConfig">
+                    <i class="ri-save-line"></i> Guardar Configuración
+                </button>
+
+                <button class="btn-print" onclick="window.print()">
+                    <i class="ri-printer-line"></i> Imprimir / PDF
+                </button>
+            </div>
+        </header>
+
+        <div class="builder-container">
+
+            <!-- Panel de configuración -->
+            <div class="config-panel hide-scroll" id="configPanel">
+
+                <div class="config-header">
+                    <h2>
+                        <i class="ri-settings-4-line"></i>
+                        Opciones de visibilidad
+                    </h2>
+                </div>
+
+                <!-- Perfil -->
+                <div class="config-section">
+                    <button class="section-toggle" aria-expanded="true" onclick="toggleSection(this)">
+                        <span>Información de Perfil</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+
+                    <div class="section-content active" id="config-profile">
+                        <div class="loading-overlay" id="load-profile" style="display:none;">
+                            <i class="ri-loader-4-line"></i>
+                        </div>
+
+                        <label class="item-toggle">
+                            <input type="checkbox" id="cfg-photo" checked onchange="updatePreview()">
+                            <div class="item-info">
+                                <span class="item-title">Fotografía</span>
+                                <span class="item-subtitle">Mostrar foto de perfil si existe</span>
+                            </div>
+                        </label>
+
+                        <label class="item-toggle">
+                            <input type="checkbox" id="cfg-email" checked onchange="updatePreview()">
+                            <div class="item-info">
+                                <span class="item-title">Correo electrónico</span>
+                            </div>
+                        </label>
+
+                        <label class="item-toggle">
+                            <input type="checkbox" id="cfg-phone" checked onchange="updatePreview()">
+                            <div class="item-info">
+                                <span class="item-title">Teléfono</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Experiencia -->
+                <div class="config-section">
+                    <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+                        <span>Experiencia Laboral</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+
+                    <div class="section-content" id="config-experience">
+                        <div class="loading-overlay" id="load-experience">
+                            <i class="ri-loader-4-line"></i>
+                        </div>
+                        <div id="list-experience"></div>
+                    </div>
+                </div>
+
+                <!-- Formación -->
+                <div class="config-section">
+                    <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+                        <span>Formación Académica</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+
+                    <div class="section-content" id="config-education">
+                        <div class="loading-overlay" id="load-education">
+                            <i class="ri-loader-4-line"></i>
+                        </div>
+                        <div id="list-education"></div>
+                    </div>
+                </div>
+
+                <!-- Habilidades -->
+                <div class="config-section">
+                    <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+                        <span>Habilidades</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+
+                    <div class="section-content" id="config-skills">
+                        <div class="loading-overlay" id="load-skills">
+                            <i class="ri-loader-4-line"></i>
+                        </div>
+                        <div id="list-skills"></div>
+                    </div>
+                </div>
+
+                <!-- Proyectos -->
+                <div class="config-section">
+                    <button class="section-toggle" aria-expanded="false" onclick="toggleSection(this)">
+                        <span>Proyectos Destacados</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+
+                    <div class="section-content" id="config-projects">
+                        <div class="loading-overlay" id="load-projects">
+                            <i class="ri-loader-4-line"></i>
+                        </div>
+                        <div id="list-projects"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Divisor redimensionable -->
+            <div class="resizer" id="dragMe"></div>
+
+            <!-- Vista previa -->
+            <div class="preview-panel hide-scroll">
+                <div class="a4-document" id="cvPreview">
+                    <div style="text-align:center;color:#999;margin-top:100px;width:100%;">
+                        Generando vista previa...
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+  <script src="/js/dynamic_resume.js"></script>
+
+</body>
+</html>

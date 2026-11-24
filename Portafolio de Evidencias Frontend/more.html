@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F4F6F8">
+    <title>Más y Configuración | Portal de Evidencias</title>
+    <link rel="icon" href="img/PortalEvidenciasIcon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#17324d">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            base: 'var(--theme-base)',
+                            surface: 'var(--theme-surface)',
+                            'surface-hover': 'var(--theme-surface-hover)',
+                            border: 'var(--theme-border)',
+                            'text-main': 'var(--theme-text-main)',
+                            'text-muted': 'var(--theme-text-muted)',
+                            primary: 'var(--theme-primary)',
+                            'primary-hover': 'var(--theme-primary-hover)',
+                            'primary-soft': 'var(--theme-primary-soft)',
+                            'primary-text': 'var(--theme-primary-text)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+<script>
+    window.PORTAL_API_BASE = 'https://pureblood-starfish-happening.ngrok-free.dev/api';
+</script>
+<script src="./js/themes.js"></script>
+
+<style>
+    :root {
+        --sidebar-width: 260px;
+
+        --theme-base: #F4F6F8;
+        --theme-surface: #FFFFFF;
+        --theme-surface-hover: #F8FAFC;
+        --theme-border: #E2E8F0;
+        --theme-text-main: #16324F;
+        --theme-text-muted: #5C6B73;
+        --theme-primary: #2A9D8F;
+        --theme-primary-hover: #21867A;
+        --theme-primary-soft: rgba(42,157,143,.12);
+        --theme-primary-text: #FFFFFF;
+        --theme-font-size: 16px;
+
+        /* Colores dinámicos de la barra lateral */
+        --sidebar-background: #10263D;
+        --sidebar-text: #FFFFFF;
+        --sidebar-text-muted: #A8BAC9;
+        --sidebar-label: #91A5B7;
+        --sidebar-link: #C5D1DB;
+        --sidebar-link-hover: rgba(255,255,255,.08);
+        --sidebar-link-active: var(--theme-primary);
+        --sidebar-link-active-text: #7DDBCE;
+        --sidebar-brand-background: rgba(42,157,143,.18);
+        --sidebar-brand-icon: #70D0C2;
+        --sidebar-border: rgba(255,255,255,.1);
+
+        /* Degradado dinámico para banners */
+        --banner-gradient-start: var(--theme-primary);
+        --banner-gradient-middle: var(--theme-primary-hover);
+        --banner-gradient-end: var(--theme-primary);
+        --banner-text: #FFFFFF;
+        --banner-overlay: rgba(255,255,255,.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { font-size: var(--theme-font-size); }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--theme-base);
+        color: var(--theme-text-main);
+        font-family: Inter, sans-serif;
+        transition: background-color .25s, color .25s;
+        visibility: hidden;
+    }
+
+    body * {
+        transition-property: background-color, border-color, color, box-shadow;
+        transition-duration: .2s;
+        transition-timing-function: ease;
+    }
+
+    html.reduce-motion *,
+    html.reduce-motion *::before,
+    html.reduce-motion *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* --- SIDEBAR DINÁMICA --- */
+.sidebar {
+    display: none;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    padding: 27px 19px;
+    background: var(--sidebar-background, var(--theme-text-main));
+    color: var(--sidebar-text, var(--theme-surface));
+    box-shadow: 4px 0 24px rgba(0,0,0,0.05);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px 34px;
+}
+
+.brand-icon {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 14px;
+    background: var(--sidebar-brand-background, var(--theme-primary-soft));
+    color: var(--sidebar-brand-icon, var(--theme-primary));
+    font-size: 23px;
+}
+
+.brand-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
+
+.brand-caption {
+    margin-top: 2px;
+    color: var(--sidebar-text-muted, var(--theme-text-muted));
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+
+.nav-label {
+    padding: 0 12px;
+    margin: 8px 0 12px;
+    color: var(--sidebar-label, var(--theme-text-muted));
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    padding: 13px 14px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--sidebar-link, var(--theme-text-muted));
+    text-align: left;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+.nav-link i {
+    font-size: 19px;
+}
+
+.nav-link:hover {
+    background: var(--sidebar-link-hover);
+    color: var(--sidebar-text);
+    transform: translateX(3px);
+}
+
+.nav-link.active {
+    background: var(--sidebar-link-active);
+    color: var(--sidebar-link-active-text);
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--theme-primary);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding: 17px 13px 0;
+    border-top: 1px solid var(--sidebar-border, var(--theme-border));
+}
+
+.sidebar-note {
+    color: var(--sidebar-text-muted, var(--theme-text-muted));
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        display: flex;
+    }
+
+    .main-content-wrapper {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+    }
+}
+/* --- FIN SIDEBAR --- */
+
+    /* --- BANNERS CON DEGRADADO DINÁMICO --- */
+    .banner,
+    .page-banner,
+    .header-banner {
+        background: linear-gradient(
+            120deg,
+            var(--banner-gradient-start),
+            var(--banner-gradient-middle),
+            var(--banner-gradient-end)
+        );
+        color: var(--banner-text);
+    }
+
+    .banner h1,
+    .banner h2,
+    .page-banner h1,
+    .page-banner h2,
+    .header-banner h1,
+    .header-banner h2 {
+        color: var(--banner-text);
+    }
+    /* --- FIN BANNERS --- */
+
+    .view-section { display: none; }
+    .view-section.active { display: flex; }
+
+    .panel {
+        background: var(--theme-surface);
+        border: 1px solid var(--theme-border);
+        border-radius: 1.5rem;
+    }
+
+    .theme-card {
+        border: 2px solid var(--theme-border);
+        background: var(--theme-surface);
+        border-radius: 1.1rem;
+        padding: .8rem;
+        text-align: left;
+        cursor: pointer;
+        min-width: 0;
+    }
+
+    .theme-card:hover { transform: translateY(-2px); }
+
+    .theme-card.active {
+        border-color: var(--theme-primary);
+        box-shadow: 0 0 0 3px var(--theme-primary-soft);
+    }
+
+    .theme-preview {
+        height: 76px;
+        border-radius: .75rem;
+        padding: .5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid rgba(128,128,128,.15);
+        margin-bottom: .65rem;
+    }
+
+    .theme-preview-surface {
+        height: 19px;
+        border-radius: 5px;
+        border: 1px solid rgba(128,128,128,.15);
+    }
+
+    .theme-preview-bottom {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+    }
+
+    .theme-preview-line {
+        width: 55%;
+        height: 7px;
+        border-radius: 5px;
+    }
+
+    .theme-preview-accent {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+    }
+
+    .theme-card-name {
+        display: block;
+        font-size: .78rem;
+        font-weight: 700;
+        color: var(--theme-text-main);
+    }
+
+    .theme-card-description {
+        display: block;
+        font-size: .68rem;
+        line-height: 1.4;
+        color: var(--theme-text-muted);
+        margin-top: .25rem;
+    }
+
+    .setting-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.25rem;
+    }
+
+    .setting-row + .setting-row {
+        border-top: 1px solid var(--theme-border);
+    }
+
+    .setting-label {
+        font-size: .9rem;
+        font-weight: 600;
+        color: var(--theme-text-main);
+    }
+
+    .setting-description {
+        margin-top: .3rem;
+        font-size: .75rem;
+        line-height: 1.5;
+        color: var(--theme-text-muted);
+    }
+
+    select, input, textarea {
+        color: var(--theme-text-main);
+    }
+
+    .field {
+        width: 100%;
+        background: var(--theme-base);
+        border: 1px solid var(--theme-border);
+        border-radius: .8rem;
+        padding: .75rem .9rem;
+        font-size: .85rem;
+    }
+
+    .field:focus {
+        outline: none;
+        border-color: var(--theme-primary);
+        box-shadow: 0 0 0 3px var(--theme-primary-soft);
+    }
+
+    .toggle {
+        appearance: none;
+        position: relative;
+        width: 46px;
+        height: 25px;
+        flex-shrink: 0;
+        border-radius: 999px;
+        background: var(--theme-border);
+        cursor: pointer;
+    }
+
+    .toggle::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 19px;
+        height: 19px;
+        border-radius: 50%;
+        background: white;
+        transition: transform .2s;
+    }
+
+    .toggle:checked { background: var(--theme-primary); }
+    .toggle:checked::after { transform: translateX(21px); }
+
+    .primary-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: .5rem;
+        padding: .75rem 1.1rem;
+        border: 0;
+        border-radius: .8rem;
+        background: var(--theme-primary);
+        color: var(--theme-primary-text);
+        font-size: .85rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .primary-button:hover { background: var(--theme-primary-hover); }
+
+    .secondary-button {
+        padding: .7rem 1rem;
+        border: 1px solid var(--theme-border);
+        border-radius: .8rem;
+        color: var(--theme-text-main);
+        font-size: .85rem;
+        font-weight: 600;
+        background: var(--theme-surface);
+        cursor: pointer;
+    }
+
+    .view-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 1.3rem 1rem;
+        background: color-mix(in srgb, var(--theme-base) 92%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--theme-border);
+    }
+
+    @media (min-width: 768px) {
+        .view-header {
+            padding: 2rem 2.5rem 1.2rem;
+            border: 0;
+        }
+    }
+
+    .faq-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .25s ease;
+    }
+
+    .faq-item.open .faq-content { max-height: 300px; }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: rgba(0,0,0,.55);
+        backdrop-filter: blur(5px);
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-card {
+        width: 100%;
+        max-width: 480px;
+        padding: 1.5rem;
+        border-radius: 1.4rem;
+        background: var(--theme-surface);
+        border: 1px solid var(--theme-border);
+        box-shadow: 0 25px 60px rgba(0,0,0,.2);
+    }
+
+    .toast {
+        position: fixed;
+        z-index: 200;
+        right: 1rem;
+        bottom: 5.5rem;
+        max-width: calc(100% - 2rem);
+        padding: .9rem 1.1rem;
+        border-radius: .9rem;
+        color: var(--theme-primary-text);
+        background: var(--theme-text-main);
+        box-shadow: 0 12px 30px rgba(0,0,0,.2);
+        opacity: 0;
+        transform: translateY(15px);
+        pointer-events: none;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* =========================================
+   SKELETON LOADER - EXTRACURRICULAR
+========================================= */
+
+:root {
+    --skeleton-base: var(--border, #e9edf2);
+    --skeleton-highlight: rgba(255, 255, 255, .72);
+    --skeleton-radius: 13px;
+}
+
+.skeleton-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    background: var(--background, #f5f7fa);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .35s ease, visibility .35s ease;
+    overflow: hidden;
+}
+
+.skeleton-screen.is-leaving {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.skeleton-sidebar {
+    height: 100%;
+    padding: 30px 20px;
+    background: var(--card, #fff);
+    border-right: 1px solid var(--border, #e9edf2);
+}
+
+.skeleton-logo {
+    width: 145px;
+    height: 35px;
+    margin: 0 0 48px 5px;
+}
+
+.skeleton-nav-item {
+    width: 100%;
+    height: 43px;
+    margin-bottom: 13px;
+    border-radius: 10px;
+}
+
+.skeleton-nav-item:nth-child(3) {
+    width: 82%;
+}
+
+.skeleton-nav-item:nth-child(4) {
+    width: 91%;
+}
+
+.skeleton-main {
+    min-width: 0;
+    padding: 28px 34px 40px;
+    overflow: hidden;
+}
+
+.skeleton-topbar {
+    width: 100%;
+    height: 65px;
+    margin-bottom: 32px;
+    border-radius: 18px;
+}
+
+.skeleton-heading {
+    width: 245px;
+    height: 29px;
+    margin-bottom: 23px;
+}
+
+.skeleton-banner {
+    width: 100%;
+    min-height: 155px;
+    margin-bottom: 28px;
+    border-radius: 17px;
+}
+
+.skeleton-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 19px;
+    margin-bottom: 30px;
+}
+
+.skeleton-metric {
+    min-height: 112px;
+    padding: 20px;
+    border-radius: var(--skeleton-radius);
+    background: var(--card, #fff);
+    border: 1px solid var(--border, #e9edf2);
+}
+
+.skeleton-metric-icon {
+    width: 37px;
+    height: 37px;
+    margin-bottom: 13px;
+    border-radius: 10px;
+}
+
+.skeleton-metric-value {
+    width: 65px;
+    height: 22px;
+    margin-bottom: 8px;
+}
+
+.skeleton-metric-label {
+    width: 115px;
+    height: 11px;
+}
+
+.skeleton-section-title {
+    width: 190px;
+    height: 21px;
+    margin-bottom: 17px;
+}
+
+.skeleton-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 19px;
+}
+
+.skeleton-card {
+    min-height: 190px;
+    padding: 20px;
+    border-radius: var(--skeleton-radius);
+    background: var(--card, #fff);
+    border: 1px solid var(--border, #e9edf2);
+}
+
+.skeleton-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 23px;
+}
+
+.skeleton-card-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+}
+
+.skeleton-card-actions {
+    width: 85px;
+    height: 25px;
+    border-radius: 8px;
+}
+
+.skeleton-card-title {
+    width: 78%;
+    height: 16px;
+    margin-bottom: 13px;
+}
+
+.skeleton-card-subtitle {
+    width: 55%;
+    height: 11px;
+    margin-bottom: 10px;
+}
+
+.skeleton-card-line {
+    width: 92%;
+    height: 10px;
+    margin-bottom: 22px;
+}
+
+.skeleton-card-footer {
+    width: 72%;
+    height: 11px;
+}
+
+/* Shimmer */
+
+.skeleton-block {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: var(--skeleton-base);
+    border-radius: 8px;
+}
+
+.skeleton-block::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--skeleton-highlight) 50%,
+        transparent 100%
+    );
+    animation: skeleton-shimmer 1.45s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Aparición del contenido */
+
+body.skeleton-loading > *:not(.skeleton-screen) {
+    visibility: hidden;
+}
+
+body.skeleton-ready > *:not(.skeleton-screen) {
+    visibility: visible;
+    animation: content-reveal .38s ease both;
+}
+
+@keyframes content-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+body.skeleton-loading {
+    overflow: hidden;
+}
+
+.skeleton-screen {
+    pointer-events: auto;
+}
+
+.skeleton-screen.is-leaving {
+    pointer-events: none;
+}
+    @media (min-width: 768px) {
+        .toast { bottom: 2rem; }
+    }
+
+    .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 40;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: .55rem .5rem calc(.55rem + env(safe-area-inset-bottom));
+        background: var(--theme-surface);
+        border-top: 1px solid var(--theme-border);
+    }
+
+    .mobile-nav a, .mobile-nav button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        border: 0;
+        background: none;
+        color: var(--theme-text-muted);
+        font-size: .68rem;
+        text-decoration: none;
+    }
+
+    .mobile-nav i { font-size: 1.4rem; }
+    .mobile-nav .active { color: var(--theme-primary); font-weight: 700; }
+
+    .error-message {
+        color: #DC2626;
+        font-size: .78rem;
+        margin-top: .35rem;
+    }
+
+    .status-message {
+        font-size: .75rem;
+        color: var(--theme-text-muted);
+    }
+</style>
+
+</head>
+
+<body>
+    
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="ri-fingerprint-line"></i></div>
+            <div>
+                <div class="brand-name">Portal de Evidencias</div>
+                <div class="brand-caption">Mi espacio profesional</div>
+            </div>
+        </div>
+
+        <div class="nav-label">Menú principal</div>
+
+        <nav class="nav-list">
+            <a class="nav-link" href="dashboard.html"><i class="ri-home-5-line"></i><span>Inicio</span></a>
+            <a class="nav-link" href="profile.html"><i class="ri-user-3-line"></i><span>Mi perfil</span></a>
+            <a class="nav-link" href="academic_qualifications.html"><i class="ri-graduation-cap-line"></i><span>Formación académica</span></a>
+            <a class="nav-link" href="job_experience.html"><i class="ri-briefcase-line"></i><span>Experiencia laboral</span></a>
+            <a class="nav-link" href="habilidades.html"><i class="ri-lightbulb-flash-line"></i><span>Habilidades</span></a>
+            <button class="nav-link active" onclick="navigateTo('main')"><i class="ri-more-2-fill"></i><span>Más y Ajustes</span></button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <p class="sidebar-note">Personaliza tu experiencia y administra las opciones de tu cuenta.</p>
+        </div>
+    </aside>
+
+    <main class="main-content-wrapper min-h-screen pb-24 md:pb-10">
+        <!-- MAIN -->
+        <section id="view-main" class="view-section active flex-col w-full max-w-5xl mx-auto">
+            <header class="view-header">
+                <div class="flex items-center gap-3">
+                    <div class="grid h-10 w-10 place-items-center rounded-xl" style="background:var(--theme-primary-soft);color:var(--theme-primary)">
+                        <i class="ri-apps-2-line text-xl"></i>
+                    </div>
+                    <h1 class="font-heading text-2xl font-bold md:text-3xl">Más opciones</h1>
+                </div>
+                <p class="mt-2 text-sm" style="color:var(--theme-text-muted)">Personaliza tu experiencia y administra las opciones de tu cuenta.</p>
+            </header>
+
+            <div class="space-y-8 px-4 py-6 md:px-10">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <button onclick="navigateTo('config')" class="panel p-6 text-left hover:-translate-y-1">
+                        <i class="ri-palette-line text-3xl" style="color:var(--theme-primary)"></i>
+                        <h2 class="mt-4 font-heading text-lg font-bold">Personalización global</h2>
+                        <p class="mt-1 text-sm" style="color:var(--theme-text-muted)">Configura los temas, colores y apariencia de todo el portal.</p>
+                    </button>
+                    <button onclick="navigateTo('help')" class="panel p-6 text-left hover:-translate-y-1">
+                        <i class="ri-customer-service-2-line text-3xl" style="color:var(--theme-primary)"></i>
+                        <h2 class="mt-4 font-heading text-lg font-bold">Ayuda y soporte</h2>
+                        <p class="mt-1 text-sm" style="color:var(--theme-text-muted)">Consulta preguntas frecuentes y reporta problemas.</p>
+                    </button>
+                    <button onclick="navigateTo('privacy')" class="panel p-6 text-left hover:-translate-y-1">
+                        <i class="ri-shield-keyhole-line text-3xl" style="color:var(--theme-primary)"></i>
+                        <h2 class="mt-4 font-heading text-lg font-bold">Privacidad y seguridad</h2>
+                        <p class="mt-1 text-sm" style="color:var(--theme-text-muted)">Consulta información relacionada con el manejo de tus datos.</p>
+                    </button>
+                    <button onclick="navigateTo('about')" class="panel p-6 text-left hover:-translate-y-1">
+                        <i class="ri-information-line text-3xl" style="color:var(--theme-primary)"></i>
+                        <h2 class="mt-4 font-heading text-lg font-bold">Acerca de</h2>
+                        <p class="mt-1 text-sm" style="color:var(--theme-text-muted)">Información general del Portal de Evidencias.</p>
+                    </button>
+                </div>
+
+                <section class="panel overflow-hidden">
+                    <div class="border-b p-5" style="border-color:var(--theme-border);background:var(--theme-surface-hover)">
+                        <h3 class="text-sm font-bold uppercase tracking-wider">Accesos rápidos</h3>
+                    </div>
+                    <a href="profile.html" class="flex items-center justify-between p-5 hover:bg-theme-surface-hover">
+                        <span class="flex items-center gap-3 text-sm font-semibold"><i class="ri-user-line text-xl" style="color:var(--theme-primary)"></i> Mi perfil</span>
+                        <i class="ri-arrow-right-s-line"></i>
+                    </a>
+                    <a href="dynamic_resume.html" class="flex items-center justify-between border-t p-5 hover:bg-theme-surface-hover" style="border-color:var(--theme-border)">
+                        <span class="flex items-center gap-3 text-sm font-semibold"><i class="ri-file-user-line text-xl" style="color:var(--theme-primary)"></i> Mi currículum</span>
+                        <i class="ri-arrow-right-s-line"></i>
+                    </a>
+                </section>
+            </div>
+        </section>
+
+        <!-- CONFIG -->
+        <section id="view-config" class="view-section flex-col w-full max-w-4xl mx-auto">
+            <header class="view-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="navigateTo('main')" class="secondary-button"><i class="ri-arrow-left-line"></i></button>
+                    <h1 class="font-heading text-xl font-bold md:text-2xl">Personalización global</h1>
+                </div>
+                <p class="mt-2 text-sm" style="color:var(--theme-text-muted)">Los cambios se sincronizan con tu cuenta.</p>
+            </header>
+
+            <div class="space-y-8 px-4 py-6 md:px-8">
+                <section>
+                    <div class="mb-4">
+                        <h2 class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider" style="color:var(--theme-primary)"><i class="ri-palette-line text-lg"></i> Galería de temas</h2>
+                        <p class="mt-1 text-xs" style="color:var(--theme-text-muted)">Selecciona una de las 20 paletas disponibles.</p>
+                    </div>
+                    <div id="themeGalleryContainer" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"></div>
+                </section>
+
+                <section class="panel overflow-hidden">
+                    <div class="border-b p-5" style="border-color:var(--theme-border)">
+                        <h2 class="font-heading font-bold">Ajustes de interfaz</h2>
+                        <p class="mt-1 text-xs" style="color:var(--theme-text-muted)">Personaliza la visualización del portal.</p>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-textSize">Tamaño del texto</label>
+                            <p class="setting-description">Ajusta la escala tipográfica general.</p>
+                        </div>
+                        <select id="pref-textSize" class="field max-w-36" onchange="updatePreference('textSize',this.value)">
+                            <option value="small">Pequeño</option>
+                            <option value="medium">Normal</option>
+                            <option value="large">Grande</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-reducedMotion">Reducir animaciones</label>
+                            <p class="setting-description">Minimiza los efectos de movimiento.</p>
+                        </div>
+                        <input id="pref-reducedMotion" type="checkbox" class="toggle" onchange="updatePreference('reducedMotion',this.checked)">
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-density">Densidad compacta</label>
+                            <p class="setting-description">Reduce los espacios entre elementos cuando la pantalla lo permita.</p>
+                        </div>
+                        <input id="pref-density" type="checkbox" class="toggle" onchange="updatePreference('compactDensity',this.checked)">
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-accent">Color de acento personalizado</label>
+                            <p class="setting-description">Personaliza botones, enlaces y elementos destacados.</p>
+                        </div>
+                        <input id="pref-accent" type="color" value="#2A9D8F" class="h-10 w-14 cursor-pointer rounded-lg border-0 bg-transparent" onchange="updatePreference('accentColor',this.value)">
+                    </div>
+
+                    <div class="setting-row">
+    <div>
+        <label class="setting-label" for="pref-language">Idioma del portal</label>
+        <p class="setting-description">Selecciona el idioma de visualización de la plataforma.</p>
+    </div>
+    <select id="pref-language" class="field max-w-36"
+            onchange="updatePreference('language', this.value)">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="it">Italiano</option>
+    </select>
+</div>
+                </section>
+
+                <section class="panel overflow-hidden">
+                    <div class="border-b p-5" style="border-color:var(--theme-border)">
+                        <h2 class="font-heading font-bold">Notificaciones</h2>
+                        <p class="mt-1 text-xs" style="color:var(--theme-text-muted)">Configura qué avisos deseas recibir.</p>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-notifyGeneral">Notificaciones generales</label>
+                            <p class="setting-description">Preferencia general de avisos del portal.</p>
+                        </div>
+                        <input id="pref-notifyGeneral" type="checkbox" class="toggle" onchange="updatePreference('notifyGeneral',this.checked)">
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-notifyReminders">Recordatorios de perfil</label>
+                            <p class="setting-description">Avisos relacionados con la información de tu perfil.</p>
+                        </div>
+                        <input id="pref-notifyReminders" type="checkbox" class="toggle" onchange="updatePreference('notifyReminders',this.checked)">
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <label class="setting-label" for="pref-documentAlerts">Avisos de evidencias</label>
+                            <p class="setting-description">Preferencia para avisos relacionados con evidencias.</p>
+                        </div>
+                        <input id="pref-documentAlerts" type="checkbox" class="toggle" onchange="updatePreference('documentAlerts',this.checked)">
+                    </div>
+                </section>
+
+                <div class="flex flex-col items-start justify-between gap-3 pb-10 sm:flex-row sm:items-center">
+                    <span id="preferencesStatus" class="status-message">Cargando preferencias...</span>
+                    <button onclick="openResetModal()" class="rounded-xl px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-500/10">
+                        <i class="ri-refresh-line mr-1"></i> Restablecer preferencias
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- HELP -->
+        <section id="view-help" class="view-section flex-col w-full max-w-4xl mx-auto">
+            <header class="view-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="navigateTo('main')" class="secondary-button"><i class="ri-arrow-left-line"></i></button>
+                    <h1 class="font-heading text-xl font-bold md:text-2xl">Ayuda y soporte</h1>
+                </div>
+            </header>
+
+            <div class="space-y-8 px-4 py-6 md:px-8">
+                <div class="text-center">
+                    <i class="ri-questionnaire-line text-5xl" style="color:var(--theme-primary)"></i>
+                    <h2 class="mt-3 font-heading text-2xl font-bold">¿En qué podemos ayudarte?</h2>
+                    <input id="faqSearchInput" type="search" class="field mx-auto mt-5 max-w-xl" placeholder="Buscar una pregunta..." oninput="filterFAQs()">
+                </div>
+
+                <section>
+                    <h3 class="mb-3 text-sm font-bold uppercase tracking-wider">Preguntas frecuentes</h3>
+                    <div id="faqContainer" class="panel overflow-hidden"></div>
+                    <div id="faqEmptyState" class="hidden py-8 text-center text-sm" style="color:var(--theme-text-muted)">No se encontraron resultados.</div>
+                </section>
+
+                <section class="border-t pt-7 text-center" style="border-color:var(--theme-border)">
+                    <p class="mb-4 text-sm" style="color:var(--theme-text-muted)">¿Encontraste un error o tienes una sugerencia?</p>
+                    <button onclick="openReportModal()" class="primary-button"><i class="ri-bug-line"></i> Reportar un problema</button>
+                </section>
+            </div>
+        </section>
+
+        <!-- PRIVACY -->
+        <section id="view-privacy" class="view-section flex-col w-full max-w-4xl mx-auto">
+            <header class="view-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="navigateTo('main')" class="secondary-button"><i class="ri-arrow-left-line"></i></button>
+                    <h1 class="font-heading text-xl font-bold md:text-2xl">Privacidad y seguridad</h1>
+                </div>
+            </header>
+
+            <div class="space-y-5 px-4 py-6 md:px-8">
+                <div class="panel flex items-start gap-4 p-6">
+                    <i class="ri-lock-2-line text-3xl" style="color:var(--theme-primary)"></i>
+                    <div>
+                        <h2 class="font-bold">Protección de cuenta</h2>
+                        <p class="mt-2 text-sm leading-relaxed" style="color:var(--theme-text-muted)">El acceso a las funciones privadas del portal requiere una sesión autenticada. Las solicitudes protegidas se realizan mediante las cookies de sesión configuradas por el servidor.</p>
+                    </div>
+                </div>
+
+                <div class="panel space-y-3 p-6">
+                    <h2 class="border-b pb-3 font-bold" style="border-color:var(--theme-border)">Uso de la información</h2>
+                    <p class="text-sm leading-relaxed" style="color:var(--theme-text-muted)">La información que registras se utiliza para las funciones del Portal de Evidencias. La visibilidad de los datos depende de las funciones de publicación y consulta que estén habilitadas en el sistema.</p>
+                    <p class="text-sm leading-relaxed" style="color:var(--theme-text-muted)">No se debe asumir que el perfil es público o privado sin consultar las opciones de publicación implementadas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="view-about" class="view-section flex-col w-full max-w-4xl mx-auto">
+            <header class="view-header">
+                <div class="flex items-center gap-3">
+                    <button onclick="navigateTo('main')" class="secondary-button"><i class="ri-arrow-left-line"></i></button>
+                    <h1 class="font-heading text-xl font-bold md:text-2xl">Acerca de</h1>
+                </div>
+            </header>
+
+            <div class="flex min-h-[65vh] flex-col items-center justify-center px-4 py-10">
+                <div class="panel w-full max-w-md p-8 text-center">
+                    <div class="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-3xl" style="background:var(--theme-primary-soft);color:var(--theme-primary)">
+                        <i class="ri-fingerprint-line text-4xl"></i>
+                    </div>
+                    <h2 class="font-heading text-2xl font-bold">Portal de Evidencias</h2>
+                    <p class="mt-2 text-xs font-bold uppercase tracking-widest" style="color:var(--theme-primary)">Versión 2.0</p>
+                    <div class="mx-auto my-6 h-1 w-16 rounded-full" style="background:var(--theme-border)"></div>
+                    <p class="text-sm leading-relaxed" style="color:var(--theme-text-muted)">Plataforma para centralizar, organizar y presentar información académica y profesional.</p>
+                </div>
+                <p class="mt-8 text-xs" style="color:var(--theme-text-muted)">© 2026 Portal de Evidencias.</p>
+            </div>
+        </section>
+    </main>
+
+    <nav class="mobile-nav md:hidden">
+        <a href="dashboard.html"><i class="ri-home-5-line"></i><span>Inicio</span></a>
+        <a href="profile.html"><i class="ri-user-line"></i><span>Perfil</span></a>
+        <a href="job_experience.html"><i class="ri-briefcase-line"></i><span>Laboral</span></a>
+        <button class="active" onclick="navigateTo('main')"><i class="ri-more-2-fill"></i><span>Más</span></button>
+    </nav>
+
+    <!-- RESET MODAL -->
+    <div id="resetModal" class="modal">
+        <div class="modal-card text-center">
+            <i class="ri-error-warning-line text-4xl text-red-500"></i>
+            <h2 class="mt-3 font-heading text-lg font-bold">¿Restablecer preferencias?</h2>
+            <p class="mt-2 text-sm" style="color:var(--theme-text-muted)">Se restaurará el tema clásico y los valores predeterminados de configuración.</p>
+            <div class="mt-6 flex gap-3">
+                <button onclick="closeResetModal()" class="secondary-button flex-1">Cancelar</button>
+                <button onclick="confirmResetPreferences()" class="flex-1 rounded-xl bg-red-500 px-3 py-3 text-sm font-bold text-white">Restablecer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REPORT MODAL -->
+    <div id="reportModal" class="modal">
+        <div class="modal-card">
+            <div class="mb-5 flex items-center justify-between border-b pb-4" style="border-color:var(--theme-border)">
+                <h2 class="font-heading text-lg font-bold"><i class="ri-bug-line mr-2" style="color:var(--theme-primary)"></i>Reportar problema</h2>
+                <button onclick="closeReportModal()" class="text-xl" aria-label="Cerrar"><i class="ri-close-line"></i></button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label for="reportType" class="mb-1 block text-xs font-semibold">Tipo de problema</label>
+                    <select id="reportType" class="field">
+                        <option value="bug">Error en la aplicación</option>
+                        <option value="account">Problema con mi cuenta</option>
+                        <option value="documents">Problema con documentos</option>
+                        <option value="performance">Rendimiento</option>
+                        <option value="suggestion">Sugerencia de mejora</option>
+                        <option value="other">Otro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="reportSubject" class="mb-1 block text-xs font-semibold">Asunto *</label>
+                    <input id="reportSubject" maxlength="150" class="field" placeholder="Resume el problema">
+                </div>
+
+                <div>
+                    <label for="reportDesc" class="mb-1 block text-xs font-semibold">Descripción *</label>
+                    <textarea id="reportDesc" rows="5" maxlength="2000" class="field resize-none" placeholder="Describe lo sucedido con el mayor detalle posible."></textarea>
+                </div>
+
+                <p id="reportError" class="error-message hidden"></p>
+            </div>
+
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="closeReportModal()" class="secondary-button">Cancelar</button>
+                <button id="submitReportButton" onclick="submitReport()" class="primary-button">Enviar reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastNotification" class="toast" role="status" aria-live="polite"></div>
+
+   
+
+<script src="js/more.js"></script>
+</body>
+</html>

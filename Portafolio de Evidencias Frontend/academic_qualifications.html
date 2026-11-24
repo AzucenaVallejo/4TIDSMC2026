@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#10263D">
+    <title>Formación Académica | Portal de Evidencias</title>
+    <link rel="icon" href="img/PortalEvidenciasIcon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#17324d">
+    <link rel="stylesheet" href="./css/academic_qualifications.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+    window.PORTAL_API_BASE = 'https://pureblood-starfish-happening.ngrok-free.dev/api';
+</script>
+
+<script src="./js/themes.js"></script>
+  
+</head>
+
+<body>
+    <div class="app">
+
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ri-fingerprint-line"></i>
+                </div>
+                <div>
+                    <div class="brand-name">Portal de Evidencias</div>
+                    <div class="brand-caption">Mi espacio profesional</div>
+                </div>
+            </div>
+
+            <div class="nav-label">Menú principal</div>
+
+            <nav class="nav-list">
+                <a class="nav-link" href="dashboard.html">
+                    <i class="ri-home-5-line"></i>
+                    <span>Inicio</span>
+                </a>
+
+                <a class="nav-link" href="profile.html">
+                    <i class="ri-user-3-line"></i>
+                    <span>Mi perfil</span>
+                </a>
+
+                <a class="nav-link active" href="academic_qualifications.html">
+                    <i class="ri-graduation-cap-line"></i>
+                    <span>Formación académica</span>
+                </a>
+
+                <a class="nav-link" href="extracurricular_qualifications.html">
+                    <i class="ri-award-line"></i>
+                    <span>Formación complementaria</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p class="sidebar-note">
+                    Organiza tu trayectoria académica y mantén tu información profesional actualizada.
+                </p>
+            </div>
+        </aside>
+
+        <main class="main">
+            <div class="content">
+
+                <header class="topbar">
+                    <div class="breadcrumb">
+                        <a href="dashboard.html">Inicio</a>
+                        <i class="ri-arrow-right-s-line"></i>
+                        <span>Formación académica</span>
+                    </div>
+
+                    <div class="topbar-user">
+                        <div class="user-avatar">
+                            <i class="ri-user-line"></i>
+                        </div>
+                        <span class="user-name" id="userName">Mi cuenta</span>
+                    </div>
+                </header>
+
+                <section class="page-heading">
+                    <div>
+                        <div class="eyebrow">Trayectoria educativa</div>
+                        <h1>Formación académica</h1>
+                        <p class="page-description">
+                            Registra tus estudios, instituciones y periodos académicos.
+                            Esta información forma parte de tu expediente profesional.
+                        </p>
+                    </div>
+
+                    <button class="primary-btn" type="button" id="addEducationBtn">
+                        <i class="ri-add-line"></i>
+                        Agregar formación
+                    </button>
+                </section>
+
+                <section class="hero">
+                    <div class="hero-content">
+                        <div class="hero-label">Tu desarrollo académico</div>
+                        <h2>Construye un historial que refleje tu preparación.</h2>
+                    </div>
+                    <div class="hero-icon">
+                        <i class="ri-graduation-cap-line"></i>
+                    </div>
+                </section>
+
+                <section class="stats-grid">
+                    <article class="stat-card">
+                        <div class="stat-icon teal">
+                            <i class="ri-book-open-line"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="totalStudies">0</div>
+                            <div class="stat-label">Formaciones registradas</div>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon lavender">
+                            <i class="ri-time-line"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="currentStudies">0</div>
+                            <div class="stat-label">Estudios en curso</div>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="ri-checkbox-circle-line"></i>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="completedStudies">0</div>
+                            <div class="stat-label">Estudios finalizados</div>
+                        </div>
+                    </article>
+                </section>
+
+                <section>
+                    <div class="section-heading">
+                        <div>
+                            <h2>Mi historial académico</h2>
+                            <p>Registros asociados a tu cuenta.</p>
+                        </div>
+                    </div>
+
+                    <div class="education-list" id="educationList">
+                        <div class="loading-state">
+                            <i class="ri-loader-4-line"></i>
+                            <p>Cargando tu formación académica...</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <nav class="mobile-nav">
+            <a href="dashboard.html">
+                <i class="ri-home-5-line"></i>
+                <span>Inicio</span>
+            </a>
+            <a href="profile.html">
+                <i class="ri-user-3-line"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="academic_qualifications.html" class="active">
+                <i class="ri-graduation-cap-line"></i>
+                <span>Formación</span>
+            </a>
+            <a href="extracurricular_qualifications.html">
+                <i class="ri-award-line"></i>
+                <span>Más</span>
+            </a>
+        </nav>
+
+    </div>
+
+
+    <!-- Modal de registro y edición -->
+    <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+        <div class="modal">
+
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Agregar formación</h2>
+                    <p>Completa los datos de tu trayectoria académica.</p>
+                </div>
+
+                <button class="close-modal" type="button" id="closeFormBtn" aria-label="Cerrar">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <form id="educationForm" novalidate>
+
+                <div class="form-body">
+
+                    <input type="hidden" id="formEducationId">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label for="formGrado">Nivel educativo *</label>
+
+                            <select id="formGrado" required>
+                                <option value="">Selecciona un nivel</option>
+                                <option value="Secundaria">Secundaria</option>
+                                <option value="Preparatoria">Preparatoria</option>
+                                <option value="TSU">Técnico Superior Universitario</option>
+                                <option value="Licenciatura">Licenciatura</option>
+                                <option value="Ingenieria">Ingeniería</option>
+                                <option value="Maestria">Maestría</option>
+                                <option value="Doctorado">Doctorado</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+
+                            <div class="field-error" id="errGrado"></div>
+                        </div>
+
+                        <div class="field">
+                            <label for="formCarrera">
+                                Carrera o programa <span class="optional">(opcional)</span>
+                            </label>
+
+                            <input type="text"
+                                id="formCarrera"
+                                maxlength="200"
+                                placeholder="Ej. Desarrollo de Software">
+
+                            <div class="field-error" id="errCarrera"></div>
+                        </div>
+
+                        <div class="field full">
+                            <label for="formInstitucion">Institución educativa *</label>
+
+                            <input type="text"
+                                id="formInstitucion"
+                                maxlength="150"
+                                required
+                                placeholder="Nombre de la institución">
+
+                            <div class="field-error" id="errInstitucion"></div>
+                        </div>
+
+                        <div class="field full">
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="formEnCurso">
+
+                                <label for="formEnCurso">
+                                    Actualmente estoy cursando estos estudios
+                                    <small>
+                                        Al activar esta opción, no será necesaria una fecha de finalización.
+                                    </small>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="formFechaInicio">Fecha de inicio</label>
+                            <input type="date" id="formFechaInicio">
+                            <div class="field-error" id="errFechaInicio"></div>
+                        </div>
+
+                        <div class="field" id="fechaFinGroup">
+                            <label for="formFechaFin">Fecha de finalización</label>
+                            <input type="date" id="formFechaFin">
+                            <div class="field-error" id="errFechaFin"></div>
+                        </div>
+
+                        <div class="field full">
+                            <label for="formDescripcion">
+                                Descripción <span class="optional">(opcional)</span>
+                            </label>
+
+                            <textarea id="formDescripcion"
+                                maxlength="500"
+                                placeholder="Describe brevemente tus estudios, especialidad o información relevante."></textarea>
+
+                            <div class="field-error" id="errDescripcion"></div>
+                        </div>
+
+
+                        <!-- Documentación académica -->
+                        <div class="field full" id="documentosGroup">
+
+                            <div class="document-section">
+
+                                <div class="document-section-header">
+                                    <div class="document-section-icon">
+                                        <i class="ri-folder-shield-2-line"></i>
+                                    </div>
+
+                                    <div>
+                                        <h3>Documentación académica</h3>
+                                        <p>
+                                            Adjunta los documentos que acreditan esta formación.
+                                            Puedes conservar los archivos existentes al editar.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Certificado -->
+                                <div class="document-field" id="certificadoField">
+
+                                    <div class="document-field-top">
+                                        <div class="document-field-title">
+                                            <i class="ri-file-list-3-line"></i>
+                                            Certificado académico
+                                        </div>
+
+                                        <span class="document-required">Opcional</span>
+                                    </div>
+
+                                    <input type="file"
+                                        id="formCertificado"
+                                        class="document-input"
+                                        accept=".pdf,.jpg,.jpeg,.png">
+
+                                    <div id="certificadoActual"></div>
+
+                                    <button type="button"
+                                        class="document-remove"
+                                        id="quitarCertificado"
+                                        style="display:none">
+                                        <i class="ri-close-circle-line"></i>
+                                        Quitar archivo seleccionado
+                                    </button>
+
+                                    <p class="document-help">
+                                        Tamaño máximo: 10 MB. Selecciona un archivo para adjuntarlo
+                                        o reemplazar el documento actual.
+                                    </p>
+
+                                </div>
+
+                                <!-- Título -->
+                                <div class="document-field" id="tituloField">
+
+                                    <div class="document-field-top">
+                                        <div class="document-field-title">
+                                            <i class="ri-award-line"></i>
+                                            Título académico
+                                        </div>
+
+                                        <span class="document-required">Opcional</span>
+                                    </div>
+
+                                    <input type="file"
+                                        id="formTitulo"
+                                        class="document-input"
+                                        accept=".pdf,.jpg,.jpeg,.png">
+
+                                    <div id="tituloActual"></div>
+
+                                    <button type="button"
+                                        class="document-remove"
+                                        id="quitarTitulo"
+                                        style="display:none">
+                                        <i class="ri-close-circle-line"></i>
+                                        Quitar archivo seleccionado
+                                    </button>
+
+                                    <p class="document-help">
+                                        Tamaño máximo: 10 MB. Selecciona un archivo para adjuntarlo
+                                        o reemplazar el documento actual.
+                                    </p>
+
+                                </div>
+
+                                <div class="document-disabled-message" id="documentosEnCursoMensaje">
+                                    <i class="ri-information-line"></i>
+                                    Como esta formación está en curso, los documentos académicos
+                                    quedarán deshabilitados y no se asociarán archivos a este registro.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="field full">
+                            <div class="save-progress" id="saveProgress">
+                                <i class="ri-loader-4-line"></i>
+                                <span id="saveProgressText">Preparando información...</span>
+                            </div>
+                        </div>
+
+                        <div class="field full">
+                            <div class="form-notice">
+                                <i class="ri-shield-check-line"></i>
+
+                                <span>
+                                    Los datos se guardan en tu expediente académico.
+                                    La cuenta se identifica mediante tu sesión autenticada;
+                                    no necesitas introducir tu ID de usuario.
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="secondary-btn" type="button" id="cancelFormBtn">
+                        Cancelar
+                    </button>
+
+                    <button class="primary-btn" type="submit" id="saveEducationBtn">
+                        <i class="ri-save-line"></i>
+                        <span id="saveButtonText">Guardar formación</span>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal: Detalle de formación académica -->
+    <div class="modal-overlay" id="detailModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detailTitle">
+
+        <div class="modal-container detail-modal">
+
+            <div class="modal-header">
+                <div>
+                    <span class="eyebrow">Expediente académico</span>
+                    <h2 id="detailTitle">Información de la formación</h2>
+                    <p id="detailSubtitle">Consulta los datos y documentos de este registro.</p>
+                </div>
+
+                <button class="modal-close"
+                    type="button"
+                    id="closeDetailBtn"
+                    aria-label="Cerrar información">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="detail-heading">
+
+                    <div class="detail-degree-icon">
+                        <i class="ri-graduation-cap-line"></i>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">Formación académica</span>
+                        <h3 id="detailCareer">Sin información</h3>
+                        <p id="detailInstitution">Institución</p>
+                        <div id="detailStatus"></div>
+                    </div>
+
+                </div>
+
+                <div class="detail-grid">
+
+                    <div class="detail-item">
+                        <span>Nivel educativo</span>
+                        <strong id="detailLevel">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Fecha de inicio</span>
+                        <strong id="detailStartDate">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Fecha de finalización</span>
+                        <strong id="detailEndDate">—</strong>
+                    </div>
+
+                    <div class="detail-item full">
+                        <span>Descripción</span>
+                        <p id="detailDescription">Sin descripción adicional.</p>
+                    </div>
+
+                </div>
+
+                <div class="detail-documents-section">
+
+                    <div class="detail-section-heading">
+                        <div>
+                            <span class="eyebrow">Respaldo documental</span>
+                            <h3>Documentos adjuntos</h3>
+                        </div>
+                    </div>
+
+                    <div class="detail-documents-list">
+
+                        <div class="detail-document">
+
+                            <div class="detail-document-icon">
+                                <i class="ri-file-pdf-line"></i>
+                            </div>
+
+                            <div class="detail-document-info">
+                                <strong>Certificado académico</strong>
+                                <span id="detailCertificateStatus">
+                                    Sin documento adjunto
+                                </span>
+                            </div>
+
+                            <div class="detail-document-actions"
+                                id="detailCertificateActions">
+                            </div>
+
+                        </div>
+
+                        <div class="detail-document">
+
+                            <div class="detail-document-icon">
+                                <i class="ri-award-line"></i>
+                            </div>
+
+                            <div class="detail-document-info">
+                                <strong>Título académico</strong>
+                                <span id="detailTitleStatus">
+                                    Sin documento adjunto
+                                </span>
+                            </div>
+
+                            <div class="detail-document-actions"
+                                id="detailTitleActions">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="secondary-btn"
+                    type="button"
+                    id="closeDetailFooterBtn">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal: Visualizador de documentos -->
+    <div class="modal-overlay document-viewer-overlay"
+        id="documentViewerModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="documentViewerTitle">
+
+        <div class="document-viewer-container">
+
+            <div class="document-viewer-header">
+
+                <div>
+                    <span class="eyebrow">Visor documental</span>
+                    <h2 id="documentViewerTitle">Documento académico</h2>
+                    <p id="documentViewerDescription">
+                        Visualización del archivo adjunto.
+                    </p>
+                </div>
+
+                <div class="document-viewer-header-actions">
+
+                    <button class="icon-btn"
+                        type="button"
+                        id="downloadViewerDocumentBtn"
+                        title="Descargar documento"
+                        aria-label="Descargar documento">
+                        <i class="ri-download-cloud-2-line"></i>
+                    </button>
+
+                    <button class="close-modal"
+                        type="button"
+                        id="closeDocumentViewerBtn"
+                        aria-label="Cerrar visor">
+                        <i class="ri-close-line"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="document-viewer-content" id="documentViewerContent">
+
+                <div class="document-viewer-loading">
+                    <i class="ri-loader-4-line"></i>
+                    <p>Cargando documento...</p>
+                </div>
+
+            </div>
+
+            <div class="document-viewer-footer">
+
+                <span id="documentViewerFileName">
+                    Documento académico
+                </span>
+
+                <button class="secondary-btn"
+                    type="button"
+                    id="closeDocumentViewerFooterBtn">
+                    Cerrar visor
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal: Confirmar quitar documento -->
+    <div class="modal-overlay" id="removeDocumentModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="removeDocumentTitle">
+
+        <div class="confirm-modal remove-document-modal">
+
+            <div class="confirm-icon">
+                <i class="ri-file-reduce-line"></i>
+            </div>
+
+            <h2 id="removeDocumentTitle">Quitar documento</h2>
+
+            <p id="removeDocumentMessage">
+                ¿Deseas quitar este documento de la formación académica?
+                El archivo permanecerá almacenado en tu expediente.
+            </p>
+
+            <div class="confirm-actions">
+
+                <button class="secondary-btn"
+                    type="button"
+                    id="cancelRemoveDocumentBtn">
+                    Cancelar
+                </button>
+
+                <button class="danger-btn"
+                    type="button"
+                    id="confirmRemoveDocumentBtn">
+                    Sí, quitar
+                </button>
+
+            </div>
+
+            <button class="modal-close"
+                type="button"
+                id="closeRemoveDocumentBtn"
+                aria-label="Cerrar confirmación">
+                <i class="ri-close-line"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Confirmación de eliminación de formación -->
+    <div class="modal-overlay" id="deleteModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="deleteTitle">
+
+        <div class="confirm-modal">
+
+            <div class="confirm-icon">
+                <i class="ri-delete-bin-line"></i>
+            </div>
+
+            <h2 id="deleteTitle">Eliminar formación</h2>
+
+            <p>
+                ¿Estás seguro de que deseas eliminar este registro?
+                Esta acción no se puede deshacer.
+            </p>
+
+            <div class="confirm-actions">
+
+                <button class="secondary-btn"
+                    type="button"
+                    id="cancelDeleteBtn">
+                    Cancelar
+                </button>
+
+                <button class="danger-btn"
+                    type="button"
+                    id="confirmDeleteBtn">
+                    Sí, eliminar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Confirmación visual de guardado -->
+    <div class="modal-overlay"
+        id="successModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="successTitle">
+
+        <div class="success-modal">
+
+            <div class="success-animation">
+                <i class="ri-check-line"></i>
+            </div>
+
+            <h2 id="successTitle">¡Información guardada!</h2>
+
+            <p id="successMessage">
+                Tu formación académica se ha guardado correctamente.
+            </p>
+
+            <div class="success-detail" id="successDetail">
+                Tu expediente se encuentra actualizado.
+            </div>
+
+            <button type="button"
+                class="primary-btn"
+                id="closeSuccessBtn">
+                <i class="ri-check-line"></i>
+                Entendido
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+    <!-- MODAL: SESIÓN INVÁLIDA -->
+<div class="modal-overlay" id="sessionErrorModal">
+    <div class="access-error-modal">
+        <div class="access-error-icon session">
+            !
+        </div>
+
+        <h2>Sesión no válida</h2>
+
+        <p>
+            Tu sesión ha expirado o ya no es válida.
+            Por seguridad, necesitas iniciar sesión nuevamente
+            para continuar utilizando el portal.
+        </p>
+
+        <div class="access-error-countdown">
+            Serás redirigido al inicio de sesión...
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: ERROR DE CONEXIÓN -->
+<div class="modal-overlay" id="connectionErrorModal">
+    <div class="access-error-modal">
+        <div class="access-error-icon connection">
+            !
+        </div>
+
+        <h2>Error de conexión</h2>
+
+        <p>
+            No fue posible establecer comunicación con el servidor.
+            Comprueba tu conexión e inténtalo nuevamente.
+        </p>
+
+        <div class="access-error-countdown">
+            Serás redirigido...
+        </div>
+    </div>
+</div>
+<script src="/js/academic_qualifications.js"></script>
+</body>
+</html>
